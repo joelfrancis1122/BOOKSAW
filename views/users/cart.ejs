@@ -1,0 +1,656 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <title>BOOKSAW</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="public/assets/css/maind134.css?v=3.4">
+    <style>
+        .detail-qty {
+            display: flex;
+            align-items: center;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #046963;
+            /* Green background */
+            color: #ffffff;
+            /* White text color */
+            border: none;
+            /* No border */
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Smooth transition on hover */
+            border-radius: 7px;
+        }
+
+        .qty-btn:hover {
+            background-color: #03423e;
+            /* Darker green background on hover */
+        }
+
+        .qty-val {
+            margin: 0 10px;
+            /* Add some space between the quantity value and the buttons */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <%-include('../partials/userHeader')-%>
+
+    <div class="mobile-header-active mobile-header-wrapper-style">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-top">
+                <div class="mobile-header-logo">
+                    <a href="index.html"><img src="/public/main-logo (1).png" alt="logo"></a>
+                </div>
+                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                    <button class="close-style search-close">
+                        <i class="icon-top"></i>
+                        <i class="icon-bottom"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-header-content-area">
+                <div class="mobile-search search-style-3 mobile-header-border">
+                    <form action="#">
+                        <input type="text" placeholder="Search for items…">
+                        <button type="submit"><i class="fi-rs-search"></i></button>
+                    </form>
+                </div>
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <div class="main-categori-wrap mobile-header-border">
+                        <a class="categori-button-active-2" href="#">
+                            <span class="fi-rs-apps"></span> Browse Categories
+                        </a>
+                        <div class="categori-dropdown-wrap categori-dropdown-active-small">
+                            <ul>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-dress"></i>Women's Clothing</a>
+                                </li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-tshirt"></i>Men's Clothing</a>
+                                </li>
+                                <li> <a href="shop-grid-right.html"><i class="evara-font-smartphone"></i> Cellphones</a>
+                                </li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-desktop"></i>Computer &
+                                        Office</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-cpu"></i>Consumer
+                                        Electronics</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-home"></i>Home & Garden</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-high-heels"></i>Shoes</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-teddy-bear"></i>Mother &
+                                        Kids</a></li>
+                                <li><a href="shop-grid-right.html"><i class="evara-font-kite"></i>Outdoor fun</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- mobile menu start -->
+                    <nav>
+                        <ul class="mobile-menu">
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="/home">Home</a>
+                                <ul class="dropdown">
+                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="index-2.html">Home 2</a></li>
+                                    <li><a href="index-3.html">Home 3</a></li>
+                                    <li><a href="index-4.html">Home 4</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                    href="shop-grid-right.html">shop</a>
+                                <ul class="dropdown">
+                                    <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
+                                    <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
+                                    <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
+                                    <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
+                                    <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
+                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                            href="#">Single Product</a>
+                                        <ul class="dropdown">
+                                            <li><a href="#">Product – Right Sidebar</a></li>
+                                            <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
+                                            <li><a href="shop-product-full.html">Product – No sidebar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="shop-filter.html">Shop – Filter</a></li>
+                                    <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
+                                    <li><a href="shop-cart.html">Shop – Cart</a></li>
+                                    <li><a href="shop-checkout.html">Shop – Checkout</a></li>
+                                    <li><a href="shop-compare.html">Shop – Compare</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Mega
+                                    menu</a>
+
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                    href="blog-category-fullwidth.html">Blog</a>
+                                <ul class="dropdown">
+                                    <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
+                                    <li><a href="blog-category-list.html">Blog Category List</a></li>
+                                    <li><a href="blog-category-big.html">Blog Category Big</a></li>
+                                    <li><a href="blog-category-fullwidth.html">Blog Category Wide</a></li>
+                                    <li class="menu-item-has-children"><span class="menu-expand"></span><a
+                                            href="#">Single Product Layout</a>
+                                        <ul class="dropdown">
+                                            <li><a href="blog-post-left.html">Left Sidebar</a></li>
+                                            <li><a href="blog-post-right.html">Right Sidebar</a></li>
+                                            <li><a href="blog-post-fullwidth.html">No Sidebar</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="page-about.html">About Us</a></li>
+                                    <li><a href="page-contact.html">Contact</a></li>
+                                    <li><a href="page-account.html">My Account</a></li>
+                                    <li><a href="page-login-register.html">login/register</a></li>
+                                    <li><a href="page-purchase-guide.html">Purchase Guide</a></li>
+                                    <li><a href="page-privacy-policy.html">Privacy Policy</a></li>
+                                    <li><a href="page-terms.html">Terms of Service</a></li>
+                                    <li><a href="page-404.html">404 Page</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Language</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">German</a></li>
+                                    <li><a href="#">Spanish</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- mobile menu end -->
+                </div>
+                <div class="mobile-header-info-wrap mobile-header-border">
+                    <div class="single-mobile-header-info mt-30">
+                        <a href="page-contact.html"> Our location </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="page-login-register.html">Log In / Sign Up </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="#">(+01) - 2345 - 6789 </a>
+                    </div>
+                </div>
+                <div class="mobile-social-icon">
+                    <h5 class="mb-15 text-grey-4">Follow Us</h5>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+                    <a href="#"><img src="public/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="main">
+        <div class="page-header breadcrumb-wrap">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="/home" rel="nofollow">Home</a>
+                    <span></span> Your Cart
+                </div>
+            </div>
+        </div>
+        <section class="mt-50 mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table shopping-summery text-center clean">
+                                <thead>
+                                    <tr class="main-heading">
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Subtotal</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(locals.cartData) { %>
+                                        <% for(let i=0; i < cartData.product.length; i++) { %>
+                                            <tr>
+
+                                                <td class="image product-thumbnail">
+                                                    <img src="/public/uploads/<%= cartData.product[i].productId.Images[0] %>"
+                                                        alt="#">
+                                                </td>
+                                                <td class="product-des product-name">
+                                                    <h5 class="product-name"><a href="#">
+                                                            <%= cartData.product[i].productId.Bookname %>
+                                                        </a></h5>
+                                                </td>
+                                                <td class="price" data-title="Price" style="display: none;">
+                                                    <span id="stock_<%= cartData.product[i].productId.id %>">
+                                                        <%= cartData.product[i].productId.stock%>
+                                                    </span>
+                                                </td>
+                                                <td class="price" data-title="Price"><span
+                                                        id="saleprice_<%= cartData.product[i].productId.id %>">$<%=
+                                                            cartData.product[i].productId.saleprice %></span></td>
+                                                <td class="text-center" data-title="Stock">
+                                                    <button class="qty-btn qty-down"
+                                                        onclick="decrease('<%= cartData.product[i].productId.id %>')">
+                                                        <i class="fa-solid fa-minus"></i>
+                                                    </button>
+
+                                                    <span class="qty-val"
+                                                        id="quantity_<%= cartData.product[i].productId.id %>">
+                                                        <%= cartData.product[i].quantity %>
+                                                    </span>
+                                                    <button class="qty-btn qty-up"
+                                                        onclick="increase('<%= cartData.product[i].productId.id %>')">
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </button>
+                                                </td>
+                                                <td class="text-right" data-title="Cart">
+                                           
+                                                    <span id="subtotal_<%= cartData.product[i].productId.id %>">$<%=
+                                                        (cartData.product[i].productId.saleprice * cartData.product[i].quantity).toFixed(2) %></span>
+                                                </td>
+                                                <td class="price" data-title="Price" style="display: none;">
+                                                    <span id="stock_<%= cartData.product[i].productId.id %>">
+                                                        <%= cartData.product[i].productId.stock%>
+                                                    </span>
+                                                </td>
+                                                <td class="action" data-title="Remove">
+                                                    <a class="text-muted"
+                                                        onclick="removeItem('<%= cartData.product[i].productId.id %>')">
+                                                        <i class="fa-solid fa-trash fa-xl"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                                <% } %>
+
+                                                    <% if(locals.cartData && cartData.product.length> 0) { %>
+                                                        <% for(let i=0; i < cartData.product.length; i++) { %>
+                                                            <!-- Your cart item display code here -->
+                                                            <% } %>
+                                                                <% } else { %>
+                                                                    <tr>
+                                                                        <td colspan="6" class="text-center">Your cart is
+                                                                            empty</td>
+                                                                    </tr>
+                                                                    <% } %>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="cart-action text-end">
+
+                            <a href="/loadShop" class="btn "><i class="fi-rs-shopping-bag mr-10"></i>Continue
+                                Shopping</a>
+                            <% if(locals.cartData && cartData.product.length> 0) { %>
+                                <a href="/loadCheckOut" class="btn "><i class="fi-rs-box-alt mr-10"></i> Proceed To
+                                    CheckOut</a>
+                                <% } else { %>
+                                    <button class="btn" onclick="showEmptyCartMessage()">Proceed To CheckOut</button>
+                                    <% } %>
+
+                                        <script>
+                                            function showEmptyCartMessage() {
+                                                toastr.error('Your cart is empty');
+                                            }
+                                        </script>
+
+                                        <hr>
+                                        <div class="total-section">
+                                            <h3 style="color: #2c3e50; font-size: 20px; font-weight: bold; margin-top: 20px; margin-bottom: 10px; text-align: center; background-color: #f8f9fa; padding: 10px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">Total Price: $<span id="totalPrice"></span></h3>
+                                            </div>
+                                        <div class="divider center_icon mt-50 mb-50"><i class="fi-rs-fingerprint"></i>
+                                        </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+    <footer class="main">
+        <section class="newsletter p-30 text-white wow fadeIn animated">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 mb-md-3 mb-lg-0">
+                        <div class="row align-items-center">
+                            <div class="col flex-horizontal-center">
+                                <!-- <img class="icon-email" src="public/assets/imgs/theme/icons/icon-email.svg" alt=""> -->
+                                <!-- <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4> -->
+                            </div>
+                            <div class="col my-4 my-md-0 des">
+                                <!-- <h5 class="font-size-15 ml-4 mb-0">...and receive <strong>$25 coupon for first -->
+                                        <!-- shopping.</strong></h5> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <!-- Subscribe Form -->
+                        <form class="form-subcriber d-flex wow fadeIn animated">
+                            <!-- <input type="email" class="form-control bg-white font-small" placeholder="Enter your email"> -->
+                            <!-- <button class="btn bg-dark text-white" type="submit">Subscribe</button> -->
+                        </form>
+                        <!-- End Subscribe Form -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-padding footer-mid">
+            <div class="container pt-15 pb-20">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="widget-about font-md mb-md-5 mb-lg-0">
+                            <div class="logo logo-width-1 wow fadeIn animated">
+                                <a href="/loadHome"><img src="/public/main-logo (1).png" alt="logo"></a>
+                            </div>
+                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">Contact</h5>
+                            <p class="wow fadeIn animated">
+                                <strong>Address: </strong>562 Wellington Road, Street 32, San Francisco
+                            </p>
+                            <p class="wow fadeIn animated">
+                                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
+                            </p>
+                            <p class="wow fadeIn animated">
+                                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
+                            </p>
+                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">Follow Us</h5>
+                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
+                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-twitter.svg" alt=""></a>
+                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+                                <a href="#"><img src="public/assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3">
+                        <h5 class="widget-title wow fadeIn animated">About</h5>
+                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms &amp; Conditions</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Support Center</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2  col-md-3">
+                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
+                        <ul class="footer-list wow fadeIn animated">
+                            <li><a href="#">Sign In</a></li>
+                            <li><a href="#">View Cart</a></li>
+                            <li><a href="#">My Wishlist</a></li>
+                            <li><a href="#">Track My Order</a></li>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Order</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 class="widget-title wow fadeIn animated">Install App</h5>
+                        <div class="row">
+                            <div class="col-md-8 col-lg-12">
+                                <p class="wow fadeIn animated">From App Store or Google Play</p>
+                                <div class="download-app wow fadeIn animated">
+                                    <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active"
+                                            src="public/assets/imgs/theme/app-store.jpg" alt=""></a>
+                                    <a href="#" class="hover-up"><img src="public/assets/imgs/theme/google-play.jpg"
+                                            alt=""></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                                <p class="mb-20 wow fadeIn animated">Secured Payment Gateways</p>
+                                <img class="wow fadeIn animated" src="public/assets/imgs/theme/payment-method.png"
+                                    alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container pb-20 wow fadeIn animated">
+            <div class="row">
+                <div class="col-12 mb-20">
+                    <div class="footer-bottom"></div>
+                </div>
+                <div class="col-lg-6">
+                    <p class="float-md-left font-sm text-muted mb-0">&copy; 2022, <strong
+                            class="text-brand">BOOKSAW</strong>  </p>
+                </div>
+               
+            </div>
+        </div>
+    </footer>
+    <!-- Preloader Start -->
+    <!-- <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <h5 class="mb-5">Now Loading</h5>
+                    <div class="loader">
+                        <div class="bar bar1"></div>
+                        <div class="bar bar2"></div>
+                        <div class="bar bar3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Vendor JS-->
+    <script>
+        // Function to increase quantity
+        function increaseQuantity(button) {
+            var quantitySpan = button.previousElementSibling;
+            var currentQuantity = parseInt(quantitySpan.textContent);
+            quantitySpan.textContent = currentQuantity + 1;
+        }
+
+        // Function to decrease quantity
+        function decreaseQuantity(button) {
+            var quantitySpan = button.nextElementSibling;
+            var currentQuantity = parseInt(quantitySpan.textContent);
+            if (currentQuantity > 1) {
+                quantitySpan.textContent = currentQuantity - 1;
+            }
+        }
+    </script>
+  <script>
+    function increase(productId) {
+        const quantityElement = document.getElementById(`quantity_${productId}`);
+        const currentQuantity = parseInt(quantityElement.textContent);
+        const stockElement = document.getElementById(`stock_${productId}`);
+        const stock = parseInt(stockElement.textContent);
+
+        if (currentQuantity >= stock) {
+            toastr.error("Sorry, the maximum stock limit exceeded.");
+            return; // Exit the function early if stock limit exceeded
+        }
+
+        fetch('/updateCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: 1 // Increase by 1
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Increment the quantity displayed on the page
+                quantityElement.textContent = currentQuantity + 1;
+
+                // Update the subtotal with two decimal places
+                const salePrice = document.getElementById(`saleprice_${productId}`).textContent;
+                const subtotalElement = document.getElementById(`subtotal_${productId}`);
+                const saleP = parseFloat(salePrice.replace('$', ''));
+                const subtotal = (saleP * (currentQuantity + 1)).toFixed(2); // Format to two decimal places
+                subtotalElement.textContent = `$${subtotal}`;
+
+                updateTotalPrice();
+            } else {
+                console.error('Failed to update cart');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+
+<script>
+    function decrease(pId) {
+        const quantityElement = document.getElementById('quantity_' + pId);
+        const currentQuantity = parseInt(quantityElement.textContent);
+        if (currentQuantity > 1) {
+            fetch('/updateCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productId: pId,
+                    quantity: -1 // Decrease by 1
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Decrement the quantity displayed on the page
+                    quantityElement.textContent = currentQuantity - 1;
+                    // Update the subtotal
+                    const subtotalElement = document.getElementById('subtotal_' + pId);
+                    const salePrice = document.getElementById('saleprice_' + pId);
+                    let saleP = parseFloat(salePrice.textContent.replace('$', ''));
+                    // Calculate the new subtotal with two decimal places
+                    const newSubtotal = (saleP * (currentQuantity - 1)).toFixed(2);
+                    subtotalElement.textContent = `$${newSubtotal}`;
+                    updateTotalPrice();
+                } else {
+                    console.error('Failed to update cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        } else {
+            // Quantity is 1, do nothing or display a message
+            console.log('Cannot decrease further. Quantity is already 1.');
+        }
+    }
+
+    function removeItem(productId) {
+        fetch('/removeItem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productId })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Product removed successfully, you can update the UI if needed
+                updateTotalPrice();
+                window.location.href = '/cart';
+                console.log('Product removed successfully');
+            } else {
+                console.error('Failed to remove product');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+    <script>
+        // Function to calculate total price
+        function calculateTotalPrice() {
+            let totalPrice = 0;
+            const subtotalElements = document.querySelectorAll('[id^="subtotal_"]');
+            subtotalElements.forEach(subtotalElement => {
+                totalPrice += parseFloat(subtotalElement.textContent.replace('$', ''));
+            });
+            return totalPrice.toFixed(2); // Convert to fixed decimal places
+        }
+
+        
+        // Function to update total price display
+        function updateTotalPrice() {
+            const totalPriceElement = document.getElementById('totalPrice');
+            totalPriceElement.textContent = calculateTotalPrice();
+
+        }
+
+        // Call updateTotalPrice() initially to display the total price
+        updateTotalPrice();
+    </script>
+
+
+
+<script>
+    // Get the span element
+    const cartCountSpan = document.getElementById('cart-count');
+
+    // Update the content of the span with the cart length
+</script>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="public/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="public/assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="public/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="public/assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="public/assets/js/plugins/slick.js"></script>
+    <script src="public/assets/js/plugins/jquery.syotimer.min.js"></script>
+    <script src="public/assets/js/plugins/wow.js"></script>
+    <script src="public/assets/js/plugins/jquery-ui.js"></script>
+    <script src="public/assets/js/plugins/perfect-scrollbar.js"></script>
+    <script src="public/assets/js/plugins/magnific-popup.js"></script>
+    <script src="public/assets/js/plugins/select2.min.js"></script>
+    <script src="public/assets/js/plugins/waypoints.js"></script>
+    <script src="public/assets/js/plugins/counterup.js"></script>
+    <script src="public/assets/js/plugins/jquery.countdown.min.js"></script>
+    <script src="public/assets/js/plugins/images-loaded.js"></script>
+    <script src="public/assets/js/plugins/isotope.js"></script>
+    <script src="public/assets/js/plugins/scrollup.js"></script>
+    <script src="public/assets/js/plugins/jquery.vticker-min.js"></script>
+    <!-- Template  JS -->
+    <script src="public/assets/js/maind134.js?v=3.4"></script>
+    <script src="public/assets/js/shopd134.js?v=3.4"></script>
+</body>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:07 GMT -->
+
+</html>

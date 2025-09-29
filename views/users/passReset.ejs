@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #f4f4f4;">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4>Reset Password</h4>
+                    </div>
+                    <div class="card-body">
+                     
+                        <form action="/resetpassword/<%= token %>" method="POST" id="resetPasswordForm">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required minlength="8" pattern="^[^\s]+$">
+                                <small class="form-text text-muted">Minimum 8 characters. No spaces allowed.</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required pattern="^[^\s]+$">
+                            </div>
+                            <button type="button" onclick="resetPassword()" class="btn btn-primary">Reset Password</button>
+                        </form>
+                        
+                        <script>
+                            // Prevent spaces in password and confirm password input
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const password = document.getElementById('password');
+                                const confirmPassword = document.getElementById('confirmPassword');
+                        
+                                password.addEventListener('input', () => {
+                                    password.value = password.value.replace(/\s/g, '');
+                                });
+                        
+                                confirmPassword.addEventListener('input', () => {
+                                    confirmPassword.value = confirmPassword.value.replace(/\s/g, '');
+                                });
+                            });
+                        
+                            function resetPassword() {
+                                const password = document.getElementById('password');
+                                const confirmPassword = document.getElementById('confirmPassword');
+                        
+                                // Check if password meets minimum length requirement
+                                if (password.value.length < 8) {
+                                    toastr.error('Password should be at least 8 characters long.');
+                                    return; // Stop further execution
+                                }
+                        
+                                // Check if password and confirmPassword match
+                                if (password.value !== confirmPassword.value) {
+                                    toastr.error('Passwords do not match.');
+                                    return; // Stop further execution
+                                }
+                        
+                                // Submit the form if validations pass
+                                document.getElementById('resetPasswordForm').submit();
+                            }
+                        </script>
+                        
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="/public/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="/public/assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="/public/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="/public/assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="/public/assets/js/plugins/slick.js"></script>
+    <script src="/public/assets/js/plugins/jquery.syotimer.min.js"></script>
+    <script src="/public/assets/js/plugins/wow.js"></script>
+    <script src="/public/assets/js/plugins/jquery-ui.js"></script>
+    <script src="/public/assets/js/plugins/perfect-scrollbar.js"></script>
+    <script src="/public/assets/js/plugins/magnific-popup.js"></script>
+    <script src="/public/assets/js/plugins/select2.min.js"></script>
+    <script src="/public/assets/js/plugins/waypoints.js"></script>
+    <script src="/public/assets/js/plugins/counterup.js"></script>
+    <script src="/public/assets/js/plugins/jquery.countdown.min.js"></script>
+    <script src="/public/assets/js/plugins/images-loaded.js"></script>
+    <script src="/public/assets/js/plugins/isotope.js"></script>
+    <script src="/public/assets/js/plugins/scrollup.js"></script>
+    <script src="/public/assets/js/plugins/jquery.vticker-min.js"></script>
+    <script src="/public/assets/js/plugins/jquery.theia.sticky.js"></script>
+    <!-- Template  JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script src="/public/assets/js/maind134.js?v=3.4"></script>
+    <script>
+        async function resetPassword() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                toastr.error('Passwords do not match');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/resetpassword/<%= token %>`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ password, confirmPassword }),
+                });
+
+                const data = await response.json();
+
+                if (data.message === 'Password updated successfully') {
+                    toastr.success(data.message);
+                    // Redirect to login or wherever you want
+                    window.location.href = '/login';
+                } else {
+                    toastr.error(data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                toastr.success('Error updating password');
+            }
+        }
+    </script>
+  
+</body>
+</html>

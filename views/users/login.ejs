@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 959154758023-tu1liisoua39ocfh2dbtqvevuoe1kl8t.apps.googleusercontent.com -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="google-signin-client_id" content="959154758023-oho8hi88gopv8i5cfepvnh4f2dpdd0po.apps.googleusercontent.com">
+    <title>BOOKSAW</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+      body {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('/public/2148827214.jpg');
+    background-size: cover; /* or contain, or specify specific dimensions */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    background-size: 100% 100%; /* or any specific dimensions */
+
+}
+
+      .container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        max-width: 430px;
+        width: 100%;
+        background: #fff;
+        border-radius: 7px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      }
+      .container .registration{
+        display: none;
+      }
+      #check:checked ~ .registration{
+        display: block;
+      }
+      #check:checked ~ .login{
+        display: none;
+      }
+      #check{
+        display: none;
+      }
+      .container .form{
+        padding: 2rem;
+      }
+      .form header{
+        font-size: 2rem;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+       .form input{
+         height: 60px;
+         width: 100%;
+         padding: 0 15px;
+         font-size: 17px;
+         margin-bottom: 1.3rem;
+         border: 1px solid #ddd;
+         border-radius: 6px;
+         outline: none;
+       }
+       .form input:focus{
+         box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+       }
+      .form a{
+        font-size: 12px;
+        color: #088178;
+        text-decoration: none;
+      }
+      .form a:hover{
+        text-decoration: underline;
+      }
+      .form input.button{
+        color: #fff;
+        background: #000000;
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-top: 1.7rem;
+        cursor: pointer;
+        transition: 0.4s;
+      }
+      .form input.button:hover{
+        background: #353636;
+      }
+      .signup{
+        font-size: 17px;
+        text-align: center;
+      }
+      .signup label{
+        color: #088178;
+        cursor: pointer;
+      }
+      .signup label:hover{
+        text-decoration: underline;
+      }
+      .login header,
+.login input,
+.login a {
+    font-family: 'Your Desired Font', Helvetica Neue Bold; /* Change 'Your Desired Font' to the desired font name */
+}
+
+      
+       </style>
+       <style>
+        .google-sign-in-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  color: #3c4043;
+  cursor: pointer;
+  font-family: "Google Sans", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  padding: 0 16px;
+  transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+}
+
+.google-sign-in-button:hover {
+  background-color: #f6f9fe;
+  border-color: #d2e3fc;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 1px rgba(66, 133, 244, 0.3);
+}
+
+.google-sign-in-button:active {
+  background-color: #e8f0fe;
+  border-color: #c6dafc;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 1px rgba(66, 133, 244, 0.3);
+}
+
+.google-logo {
+  height: 18px;
+  width: 18px;
+  margin-right: 8px;
+}
+
+.google-sign-in-text {
+  font-weight: 500;
+}
+       </style>
+</head>
+<body>
+    
+ <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header>Login</header>
+      <form action="/verifyLogin" id="form" method="post">
+        
+       
+        <input type="email" id="email" placeholder="Enter your email" name="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required title="Please Check your Email Address">
+        <input type="password" id="password" placeholder="Enter your password" name="password" pattern=".{8,}" required title="Please Check your Password">
+        <a class="forget" href="/forgotPass">Forgot password?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/signup">New user? Register here</a>
+        <!-- <div class="g-signin2" data-onsuccess="onSignIn" onclick="signInWithGoogle()"></div> -->
+        <br><br>
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <button type="button" id="signInButton" class="google-sign-in-button" onclick="userSignIn">
+              <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google logo" class="google-logo">
+              <span class="google-sign-in-text">Sign in with Google</span>
+          </button>
+      </div>
+          
+           <h3 class="text-center text-danger" id="loginErrorMessage"><%=locals.errmessage ? errmessage : ''%></h3>
+        <h3 class="text-center text-success" id="loginSuccessMessage"><%=locals.successMessage ? successMessage : ''%></h3>
+        <h3 class="text-center text-success" id="bannedMessage"><%=locals.bannedMessage ? bannedMessage : ''%></h3>
+        <input type="submit" class="button" value="Login">
+      </form>
+
+ </div>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
+
+ <script>
+  
+  setInterval(()=>{
+    document.getElementById('loginErrorMessage').innerText = "";
+    document.getElementById('loginSuccessMessage').innerText = "";
+  
+  },100)
+
+
+  // Check if the success message exists, then display SweetAlert
+  const successMessage = document.getElementById('loginSuccessMessage').innerText;
+  const errMessage = document.getElementById('loginErrorMessage').innerText;
+  const bannedMessage = document.getElementById('bannedMessage').innerText;
+
+  if (successMessage.trim() !== '') {
+    Swal.fire({
+      icon: 'success',
+      title: 'Registeration Successful!',
+      text: successMessage,
+    });
+  }
+
+  if (bannedMessage.trim() !== '') {
+    Swal.fire({
+      title: "Your account is banned ",
+  width: 600,
+  padding: "3em",
+  color: "#716add",
+  background: "#fff url(/images/trees.png)",
+  backdrop: `
+    rgba(0,0,123,0.4)
+    url("/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `,
+      text: bannedMessage,
+    });
+    
+  }
+
+  if (errMessage.trim() !== '') {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      title: 'Incorrect email or password!',
+      footer: '<a href="#">Why do I have this issue?</a>'
+    });
+  }
+
+  setInterval(()=>{
+    document.getElementById('loginErrorMessage').innerText = ""
+    // document.getElementById('loginSuccessMessage').innerText = ""
+  },3000)
+
+  
+</script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   <script src="index.js"> </script>
+   
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- <script>
+      function onSignIn(googleUser) {
+console.log("kitty")
+  console.log('Email: ' + profile.getEmail());
+}
+    </script> -->
+
+
+   
+<script>
+  function onSignIn(googleUser) {
+      // Retrieve user profile information
+      var profile = googleUser.getBasicProfile();
+
+      // Retrieve email
+      var email = profile.getEmail();
+
+      // Send email and password to the backend
+      signInWithGoogle(email);
+  }
+
+  function signInWithGoogle(email) {
+    // Fetch URL
+    var url = '/googleAuth';
+
+    // Request body
+    var data = {
+        email: email
+    };
+
+    // Fetch options
+    var options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+
+    // Make the Fetch request
+    fetch(url, options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data); // Log response from the backend
+        })
+        .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+}
+
+</script>
+    <script>  
+      function displayToastrOnLoad() {
+        toastr.success('<img src="/public/cru.gif" alt="Crying Emoji" style="width: 35px; height: 35px;">', 'Please Login or Signup ', {
+                closeButton: true,  
+                progressBar: true,
+                positionClass: 'toast-top-right',  
+                timeOut: 5000,  
+                extendedTimeOut: 2000,  
+                preventDuplicates: true,  
+            })
+      }
+      window.onload = displayToastrOnLoad;
+  </script>  
+  
+
+
+
+    <script>
+      function callFetchToSendEmailToBackend(user){
+        console.log("..l", user);
+        console.log("..l", typeof(user));
+    
+        let options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ user })
+        };
+    
+        fetch('/googleAuth', options)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log("Response worked by google auth");
+            console.log(data); // Log response from the backend
+            
+            if (data.message) {
+              // Display an alert with the message from the backend
+              // alert(data.message);
+              window.location.href='/home'
+            }
+          })
+          .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+          });
+      }
+    </script>
+
+
+
+
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+
+
+    import { getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiTZn_zLvCy3A5NjTSmGWOu4QXSmuehII",
+      authDomain: "rich-discovery-417406.firebaseapp.com",
+      projectId: "rich-discovery-417406",
+      storageBucket: "rich-discovery-417406.appspot.com",
+      messagingSenderId: "457503730213",
+      appId: "1:457503730213:web:cc258de1522962480e2dcc",
+      measurementId: "G-HGCRCDB82G"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider()
+    const analytics = getAnalytics(app);
+    const signInButton = document.getElementById("signInButton")
+
+
+    const userSignIn = async()=>{
+      console.log("success sign in")
+      signInWithPopup(auth,provider)
+      .then((result)=>{
+        const user =result.user
+        console.log(user);
+        callFetchToSendEmailToBackend(user)
+      }).catch((error)=>{
+        console.log("somthing eroorr")
+        const errorCode = error.code;
+        const errorMessage = error.message
+      })
+    }
+
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+  }else{
+
+  }
+})
+
+
+
+signInButton.addEventListener('click',userSignIn);
+
+
+    
+  </script>
+
+</body>
+</html>
+ 
+
+

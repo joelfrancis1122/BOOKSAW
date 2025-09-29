@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <title>BOOKSAW</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      padding: 20px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    button#resendButton {
+      background-color: #2196F3;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button#resendButton:disabled {
+      background-color: #CCCCCC;
+      cursor: not-allowed;
+    }
+
+    #timerDisplay {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>OTP Code Verification</h1>
+    <form id="otpForm" action="/verifyOtp" method="post">
+      <label for="otpCode">Enter the OTP code sent to your phone:</label>
+      <input type="number" id="otpCode" name="otp" maxlength="6" minlength="6" required>
+      <button type="submit">Verify OTP Code</button>
+      <button type="button" id="resendButton" onclick="resendOTP()" disabled>Resend OTP</button>
+      <h3 class="text-center text-danger" style="color: red;" id="loginErrorMessage">
+        <%=locals.errmessage ? errmessage : '' %>
+      </h3>
+      <h3 class="text-center text-success" id="loginSuccessMessage">
+        <%=locals.successMessage ? successMessage : '' %>
+      </h3>
+      <div id="timerDisplay"></div>
+    </form>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    let timerDuration = 10; // 60 seconds for resend interval
+    let timer;
+
+    function startTimer() {
+      let seconds = timerDuration;
+      timer = setInterval(function () {
+        document.getElementById("timerDisplay").innerHTML = `Resend OTP in ${seconds} seconds`;
+
+        if (--seconds < 0) {
+          // Timer has expired, enable the resend button
+          clearInterval(timer);
+          document.getElementById("timerDisplay").innerHTML = "";
+          document.getElementById("resendButton").disabled = false;
+        }
+      }, 1000); // Update every 1 second
+    }
+
+    function resendOTP() {
+      // Add logic to resend OTP, for example, make an API call or generate a new OTP
+      console.log("Resending OTP...");
+
+      // Disable the resend button and start the timer again
+      document.getElementById("resendButton").disabled = true;
+      startTimer();
+
+      // Send a fetch request to resend OTP
+      fetch('/getOtp', {
+        method: 'GET', // or 'POST' if needed
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        })
+        .catch(error => {
+          console.error('Fetch error:', error);
+        });
+    }
+
+
+    // Start the timer when the page loads
+    window.onload = startTimer;
+
+  </script>
+  <!-- <script>
+      setInterval(()=>{
+        document.getElementById('loginErrorMessage').innerText = ""
+        document.getElementById('loginSuccessMessage').innerText = ""
+      },3000) -->
+  </script>
+</body>
+
+</html>

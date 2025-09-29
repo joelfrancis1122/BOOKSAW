@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:22 GMT -->
+
+<head>
+  <meta charset="utf-8" />
+  <title> BOOK-SAW</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png" />
+  <!-- Template CSS -->
+  <link href="/public/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="screen-overlay"></div>
+  <%-include('../partials/adminAside')-%>
+    <main class="main-wrap">
+
+      <section class="content-main">
+        <div class="content-header">
+          <% if (locals.orders) { %>
+            <div>
+              <h2 class="content-title card-title">Order detail</h2>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+          <header class="card-header">
+            <div class="row align-items-center">
+              <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                <span>
+                  <i class="material-icons md-calendar_today"></i>
+                  <b>
+                    <%=orders.orderDate.toLocaleString()%>
+                  </b>
+                </span>
+                <br />
+                <p>Details for Order ID: <%=orders.orderId%>
+                </p>
+              </div>
+
+            </div>
+          </header>
+
+          <!-- card-header end// -->
+          <div class="card-body">
+            <div class="row mb-50 mt-20 order-info-wrap">
+              <div class="col-md-4">
+                <article class="icontext align-items-start">
+                  <span class="icon icon-sm rounded-circle bg-primary-light">
+                    <i class="text-primary material-icons md-person"></i>
+                  </span>
+                  <div class="text">
+                    <h6 class="mb-1">Customer</h6>
+                    <p class="mb-1">
+                      Name: <%=orders.address.name %> <br>
+                        Phone:<%=orders.address.mobile%>
+                          <br />
+                    </p>
+                  </div>
+                </article>
+              </div>
+
+              <!-- col// -->
+              <div class="col-md-4">
+                <article class="icontext align-items-start">
+                  <span class="icon icon-sm rounded-circle bg-primary-light">
+                    <i class="text-primary material-icons md-local_shipping"></i>
+                  </span>
+                  <div class="text">
+                    <h6 class="mb-1">Order info</h6>
+                    <p class="mb-1">
+
+                      Shipping:ELYSIUM EXPRESS <br />
+                      Pay method:<%=orders.paymentMethod%><br />
+                        Status: <%=orders.orderStatus%>
+
+                    </p>
+                  </div>
+                </article>
+              </div>
+              <!-- col// -->
+              <div class="col-md-4">
+                <article class="icontext align-items-start">
+                  <span class="icon icon-sm rounded-circle bg-primary-light">
+                    <i class="text-primary material-icons md-place"></i>
+                  </span>
+                  <div class="text">
+                    <h6 class="mb-1">Deliver to</h6>
+                    <p class="mb-1">
+                      City: <%=orders.address.city%>,<%=orders.address.state%><br />
+                          <%=orders.address.houseName%>
+                            <br />
+                            Po Box 10000
+                    </p>
+                  </div>
+                </article>
+              </div>
+              <!-- col// -->
+            </div>
+            <!-- row // -->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="table-responsive">
+                  <% if (orderData && orderData.totalAmount === 0) { %>
+                    <% orders.orderStatus = 'Cancelled'; %>
+                <% } %>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="40%">Book Name</th>
+                            <th width="20%">Unit Price</th>
+                            <th width="20%">Quantity</th>
+                            <th width="20%" class="text-end">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let grandTotal = 0; %>
+                        <% for(let order of orders.product) { %>
+                            <tr <% if (order.productStatus === 'Cancelled') { %>style="text-decoration: line-through;"<% } %>>
+                                <td>
+                                    <a class="itemside" href="#">
+                                        <div class="left"></div>
+                                        <div class="info">
+                                            <%=order.productId.Bookname%>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td>
+                                    $ <%= order.productId.saleprice %>
+                                </td>
+                                <td>
+                                    <%= order.quantity %>
+                                </td>
+                                <td class="text-end">
+                                    $<%= (order.quantity * order.productId.saleprice).toFixed(2) %>
+                                </td>
+                            </tr>
+                            <% grandTotal += order.quantity * order.productId.saleprice; %>
+                        <% } %>
+                        <% if(orderData) { %>
+                            <tr>
+                                <td colspan="4">
+                                    <article class="float-end">
+                                        <dl class="dlist">
+                                            <h5>
+                                                <dt style="font-weight: bold; color: #333;">Grand total:
+                                                    $<%= orderData.totalAmount %>
+                                                </dt>
+                                            </h5>
+                                            <dd></dd>
+                                        </dl>
+                                    </article>
+                                </td>
+                            </tr>
+                        <% } %>
+                        <tr>
+                            <td colspan="4">
+                                <dl class="dlist">
+                                    <dt class="text-muted">Status:</dt>
+                                    <dd>
+                                        <span class="badge rounded-pill alert-success text-success">
+                                            <%= orders.paymentStatus %>
+                                        </span>
+                                    </dd>
+                                </dl>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+                </div>
+                <!-- table-responsive// -->
+              </div>
+              <!-- col// -->
+
+              <!-- col// -->
+            </div>
+          </div>
+          <!-- card-body end// -->
+        </div>
+        <%}%>
+
+
+
+          <!-- card end// -->
+      </section>
+      <!-- content-main end// -->
+      <footer class="main-footer font-xs">
+        <div class="row pb-30 pt-15">
+          <div class="col-sm-6">
+            <script data-cfasync="false"
+              src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            ©,BOOK-SAW
+          </div>
+          <div class="col-sm-6">
+            <div class="text-sm-end">All rights reserved</div>
+          </div>
+        </div>
+      </footer>
+    </main>
+    <script src="/public/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/public/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/public/admin-assets/js/main.js" type="text/javascript"></script>
+</body>
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:22 GMT -->
+
+</html>

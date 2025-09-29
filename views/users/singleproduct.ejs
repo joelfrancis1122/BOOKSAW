@@ -1,0 +1,1023 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="en">
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-product-right.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:09:56 GMT -->
+
+<head>
+  <meta charset="utf-8" />
+  <title>BOOKSAW</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png" />
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="public/assets/css/maind134.css?v=3.4" />
+  <link rel="stylesheet" href="public/assets/css/magiczoomplus.css">
+
+  <!-- Include Magic Zoom JavaScript -->
+  <!-- <script src="path/to/magiczoom.js"></script> -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- magic zoom cdn  -->
+  <link rel="stylesheet" href="/public/assets/magiczoomplus/magiczoomplus.css">
+  <script src="/public/assets/magiczoomplus/magiczoomplus.js"></script>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .out-of-stock {
+    color: red;
+}
+
+  </style>
+</head>
+
+<body>
+ 
+     <%-include('../partials/userHeader')-%>
+
+  <div class="mobile-header-active mobile-header-wrapper-style">
+    <div class="mobile-header-wrapper-inner">
+      <div class="mobile-header-top">
+        <div class="mobile-header-logo">
+          <a href="index.html"><img src="/public/main-logo (1).png" alt="logo" /></a>
+        </div>
+        <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+          <button class="close-style search-close">
+            <i class="icon-top"></i>
+            <i class="icon-bottom"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-header-content-area">
+        <div class="mobile-search search-style-3 mobile-header-border">
+          <form action="#">
+            <input type="text" placeholder="Search for items…" />
+            <button type="submit"><i class="fi-rs-search"></i></button>
+          </form>
+        </div>
+        <div class="mobile-menu-wrap mobile-header-border">
+          <div class="main-categori-wrap mobile-header-border">
+            <a class="categori-button-active-2" href="#">
+              <span class="fi-rs-apps"></span> Browse Categories
+            </a>
+          
+          </div>
+          <!-- mobile menu start -->
+          <nav>
+            <ul class="mobile-menu">
+              <li class="menu-item-has-children">
+                <span class="menu-expand"></span><a href="index.html">Home</a>
+                <ul class="dropdown">
+                  <li><a href="index.html">Home 1</a></li>
+                  <li><a href="index-2.html">Home 2</a></li>
+                  <li><a href="index-3.html">Home 3</a></li>
+                  <li><a href="index-4.html">Home 4</a></li>
+                </ul>
+              </li>
+              <li class="menu-item-has-children">
+                <span class="menu-expand"></span><a href="shop-grid-right.html">shop</a>
+                <ul class="dropdown">
+                  <li>
+                    <a href="shop-grid-right.html">Shop Grid – Right Sidebar</a>
+                  </li>
+                  <li>
+                    <a href="shop-grid-left.html">Shop Grid – Left Sidebar</a>
+                  </li>
+                  <li>
+                    <a href="shop-list-right.html">Shop List – Right Sidebar</a>
+                  </li>
+                  <li>
+                    <a href="shop-cart.html-list-left.html">Shop List – Left Sidebar</a>
+                  </li>
+                  <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
+                  <li class="menu-item-has-children">
+                    <span class="menu-expand"></span><a href="#">Single Product</a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="shop-product-right.html">Product – Right Sidebar</a>
+                      </li>
+                      <li>
+                        <a href="shop-product-left.html">Product – Left Sidebar</a>
+                      </li>
+                      <li>
+                        <a href="shop-product-full.html">Product – No sidebar</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><a href="shop-filter.html">Shop – Filter</a></li>
+                  <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
+                  <li><a href="/cart">Shop – Cart</a></li>
+                  <li><a href="shop-checkout.html">Shop – Checkout</a></li>
+                  <li><a href="shop-compare.html">Shop – Compare</a></li>
+                </ul>
+              </li>
+              <li class="menu-item-has-children">
+                <span class="menu-expand"></span><a href="#">Mega menu</a>
+                <ul class="dropdown">
+                  <li class="menu-item-has-children">
+                    <span class="menu-expand"></span><a href="#">Women's Fashion</a>
+                    <ul class="dropdown">
+                      <li><a href="shop-product-right.html">Dresses</a></li>
+                      <li>
+                        <a href="shop-product-right.html">Blouses & Shirts</a>
+                      </li>
+                      <li>
+                        <a href="shop-product-right.html">Hoodies & Sweatshirts</a>
+                      </li>
+                      <li>
+                        <a href="shop-product-right.html">Women's Sets</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="menu-item-has-children">
+                    <span class="menu-expand"></span><a href="#">Men's Fashion</a>
+                    <ul class="dropdown">
+                      <li><a href="shop-product-right.html">Jackets</a></li>
+                      <li>
+                        <a href="shop-product-right.html">Casual Faux Leather</a>
+                      </li>
+                      <li>
+                        <a href="shop-product-right.html">Genuine Leather</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="menu-item-has-children">
+                    <span class="menu-expand"></span><a href="#">Technology</a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="shop-product-right.html">Gaming Laptops</a>
+                      </li>
+                      <li>
+                        <a href="shop-product-right.html">Ultraslim Laptops</a>
+                      </li>
+                      <li><a href="shop-product-right.html">Tablets</a></li>
+                      <li>
+                        <a href="shop-product-right.html">Laptop Accessories</a>
+                      </li>
+                      <li>
+                        <a href="shop-product-right.html">Tablet Accessories</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item-has-children">
+                <span class="menu-expand"></span><a href="blog-category-fullwidth.html">Blog</a>
+                <ul class="dropdown">
+                  <li>
+                    <a href="blog-category-grid.html">Blog Category Grid</a>
+                  </li>
+                  <li>
+                    <a href="blog-category-list.html">Blog Category List</a>
+                  </li>
+                  <li>
+                    <a href="blog-category-big.html">Blog Category Big</a>
+                  </li>
+                  <li>
+                    <a href="blog-category-fullwidth.html">Blog Category Wide</a>
+                  </li>
+                  <li class="menu-item-has-children">
+                    <span class="menu-expand"></span><a href="#">Single Product Layout</a>
+                    <ul class="dropdown">
+                      <li><a href="blog-post-left.html">Left Sidebar</a></li>
+                      <li>
+                        <a href="blog-post-right.html">Right Sidebar</a>
+                      </li>
+                      <li>
+                        <a href="blog-post-fullwidth.html">No Sidebar</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item-has-children">
+                <span class="menu-expand"></span><a href="#">Pages</a>
+                <ul class="dropdown">
+                  <li><a href="page-about.html">About Us</a></li>
+                  <li><a href="page-contact.html">Contact</a></li>
+                  <li><a href="page-account.html">My Account</a></li>
+                  <li>
+                    <a href="page-login-register.html">login/register</a>
+                  </li>
+                  <li>
+                    <a href="page-purchase-guide.html">Purchase Guide</a>
+                  </li>
+                  <li>
+                    <a href="page-privacy-policy.html">Privacy Policy</a>
+                  </li>
+                  <li><a href="page-terms.html">Terms of Service</a></li>
+                  <li><a href="page-404.html">404 Page</a></li>
+                </ul>
+              </li>
+              <li class="menu-item-has-children">
+                <span class="menu-expand"></span><a href="#">Language</a>
+                <ul class="dropdown">
+                  <li><a href="#">English</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">German</a></li>
+                  <li><a href="#">Spanish</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- mobile menu end -->
+        </div>
+        <div class="mobile-header-info-wrap mobile-header-border">
+          <div class="single-mobile-header-info mt-30">
+            <a href="page-contact.html"> Our location </a>
+          </div>
+          <div class="single-mobile-header-info">
+            <a href="page-login-register.html">Log In / Sign Up </a>
+          </div>
+          <div class="single-mobile-header-info">
+            <a href="#">(+01) - 2345 - 6789 </a>
+          </div>
+        </div>
+        <div class="mobile-social-icon">
+          <h5 class="mb-15 text-grey-4">Follow Us</h5>
+          <a href="https://www.instagram.com/franceisjoe/"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt="" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="main">
+    <div class="page-header breadcrumb-wrap">
+
+ <% if(product){   %>
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/home" rel="nofollow">Home</a>
+          <span></span>
+          <%=product.Bookname%>
+        </div>
+      </div>
+    </div>
+    <section class="mt-50 mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+
+            <div class="product-detail accordion-detail">
+              <div class="row mb-50">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <div class="detail-gallery">
+                    <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                    <!-- MAIN SLIDES -->
+                    <div class="product-image-slider" style="background-color: white">
+                      <% for(let i=0 ; i < product.Images.length ; i++) { %>
+                        <figure class="border-radius-10 ml-70" >
+                          <a href="/public/uploads/<%=product.Images[i]%>" class="MagicZoom"
+                            data-options="zoomWidth: 550">
+                            <img src="/public/uploads/<%=product.Images[i]%>" style="height: 659px;" id="uploadedPhoto"></a>
+                        </figure>
+                        <% } %>
+                    </div>
+                    <!-- THUMBNAILS -->
+                    <div class="slider-nav-thumbnails pl-15 pr-15">
+                      <% for(let i=0 ; i < product.Images.length ; i++) { %>
+
+                        <div>
+                          <img src="/public/uploads/<%=product.Images[i]%>" alt="product image" margin-right:100px />
+                        </div>
+                        <% } %>
+                    </div>
+                  </div>
+                  <!-- End Gallery -->
+                  <div class="social-icons single-share">
+                    <ul class="text-grey-5 d-inline-block">
+                      <li><strong class="mr-10">Share this:</strong></li>
+                      <li class="social-facebook">
+                      </li>
+                      <li class="social-twitter">
+                      </li>
+                      <li class="social-instagram">
+                        <a href="javascript:void(0);" onclick="shareProductOnWhatsApp()"><i class="fa-brands fa-whatsapp" style="margin-right: 10px;"></i></a>
+                                              <a href="https://www.instagram.com/franceisjoe/"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt="" /></a>
+                      </li>
+                      <li class="social-linkedin">
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <div class="detail-info">
+                    <h2 class="title-detail">
+                      <%=product.Bookname%>
+                    </h2>
+                    <div class="product-detail-rating">
+                      <div class="pro-details-brand">
+                        <span>
+                          Categories:
+                          <a href="shop-grid-right.html">
+                            <%=product.Categories.categoryName%>
+                          </a></span>
+                         
+                      </div>
+
+
+
+
+
+                      <script>
+                      function shareProductOnWhatsApp() {
+                          // Get the uploaded photo
+                          const photo = document.getElementById('uploadedPhoto').src;
+                          
+                          // Get the current page URL
+                          const pageURL = window.location.href;
+                          
+                          // Define the message to share
+                          const message = `${pageURL}`;
+                          
+                          // URL to open WhatsApp with the predefined message and photo
+                          const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}%0A&image=${encodeURIComponent(photo)}`;
+                          
+                          // Open the URL in a new window
+                          window.open(whatsappURL, '_blank');
+                      }
+                      
+                      // Handle photo upload
+                      document.getElementById('photoInput').addEventListener('change', function() {
+                          const file = this.files[0];
+                          
+                          if (file) {
+                              const reader = new FileReader();
+                              
+                              reader.addEventListener('load', function() {
+                                  // Set the uploaded photo as the source of the img element
+                                  document.getElementById('uploadedPhoto').src = this.result;
+                              });
+                              
+                              reader.readAsDataURL(file);
+                          }
+                      });
+                      </script>
+                      <!-- <div class="product-rate-cover text-end">
+                        <div class="product-rate d-inline-block">
+                          <div class="product-rating" style="width: 90%"></div>
+                        </div>
+                        <span class="font-small ml-5 text-muted">
+                          (25 reviews)</span>
+                      </div> -->
+                    </div>
+                    
+                    <div class="clearfix product-price-cover">
+                      <div class="product-price primary-color float-left">
+                        <ins><span class="text-brand">$<%=product.saleprice%></span></ins>
+                        <ins><span class="old-price font-md ml-15">$<%=product.Regularprice%></span></ins>
+                        <span class="save-price font-md color3 ml-15">25% Off</span>
+                      </div>
+                    </div>
+                    <div class="bt-1 border-color-1 mt-15 mb-15"></div>
+                    <div class="short-desc mb-30">
+                      <p>
+                        <%=product.Description%>
+                      </p>
+                    </div>
+                    <div class="product_sort_info font-xs mb-30">
+                      <ul>
+                        <li class="mb-10">
+                          <i class="fi-rs-crown mr-5"></i> 1 Year AL Jazeera
+                          Brand Warranty
+                        </li>
+                        <li class="mb-10">
+                          <i class="fi-rs-refresh mr-5"></i> 30 Day Return
+                          Policy
+                        </li>
+                        <li>
+                          <i class="fi-rs-credit-card mr-5"></i> Cash on
+                          Delivery available
+                        </li>
+                      </ul>
+                    </div>
+                    <% if (product.stock > 0) { %>
+                      <a class="button button-add-to-cart" style="color: rgb(255, 255, 255);"  onclick="addToCart('<%= product._id %>')">
+                          Add to cart <i class="fa-solid fa-cart-shopping fa-shake"></i>
+                      </a>
+                      <a  href="/loadCheckOut1?id=<%=product.id%>" class="button button-add-to-cart" style="color: rgb(255, 255, 255);" >
+                        Buy Now
+                    </a>
+                  <% } else { %>
+                    <div style="background-color: rgb(130, 15, 15); border: none; border-radius: 5px; padding: 10px 20px; display: inline-block; cursor: not-allowed;">
+                      <h3 style="color: white; margin: 0;"><strong>Currently Unavailable</strong></h3>
+                    </div>
+                    <% } %>
+                    <a href="/wishlist?id=<%=product._id%>" class="button button-add-to-cart" style="color: rgb(255, 255, 255);" ><i class="fa-solid fa-heart"></i></a>
+                  
+                                  </div>
+
+
+                  <ul class="product-meta font-xs color-grey mt-50">
+                    <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li>
+                    <li class="mb-5">
+                    </li>
+                    <li>
+             Available Stock:
+        <span class="<%= product.stock > 0 ? 'text-success' : 'text-danger' %> ml-2">
+        <% if (product.stock > 0) { %>
+        <%= product.stock %>
+        <% } else { %>
+       <strong><span style="color: red;">Out of Stock</span></strong>
+        <% } %>
+      </span>
+
+
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="tab-style3">
+              <ul class="nav nav-tabs text-uppercase">
+                <li class="nav-item">
+                  <a class="nav-link active" id="Description-tab" data-bs-toggle="tab"
+                    href="#Description">Description</a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a class="nav-link" id="Additional-info-tab" data-bs-toggle="tab" href="#Additional-info">Additional
+                    info</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="Reviews-tab" data-bs-toggle="tab" href="#Reviews">Reviews (3)</a>
+                </li> -->
+              </ul>
+              <div class="tab-content shop_info_tab entry-main-content">
+                <div class="tab-pane fade show active" id="Description">
+                  <div class="">
+                    <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dolorem vitae fugiat, consequuntur quia nostrum! Hic sint amet pariatur recusandae, cum iste corporis natus aut ad autem molestiae eaque vel.
+                    </p>
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto quaerat quam tempora rerum beatae, aliquid assumenda tenetur laudantium maiores doloribus suscipit ut quia est consectetur maxime dicta facere cumque nulla!
+                    </p>
+
+                    <hr class="wp-block-separator is-style-dots" />
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam magnam, architecto vel magni sit fugit optio quia cumque tempore officia corrupti earum temporibus, odio dolorum aperiam! Iste laborum neque molestiae?
+                    </p>
+                    <h4 class="mt-30">Packaging & Delivery</h4>
+                    <hr class="wp-block-separator is-style-wide" />
+                    <p>
+                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ad repellendus qui quibusdam cum non. Optio officia, architecto eligendi consequatur illo iusto ipsa natus ad aperiam dolorum corrupti id consequuntur!
+                    </p>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam labore itaque ab dolorum necessitatibus quos, modi suscipit, quidem excepturi aut ducimus vel ad, saepe libero laudantium atque sapiente esse? Voluptatibus.
+                    </p>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="Additional-info">
+                  <table class="font-md">
+                    <tbody>
+                      <tr class="stand-up">
+                        <th>Stand Up</th>
+                        <td>
+                          <p>35″L x 24″W x 37-45″H(front to back wheel)</p>
+                        </td>
+                      </tr>
+                      <tr class="folded-wo-wheels">
+                        <th>Folded (w/o wheels)</th>
+                        <td>
+                          <p>32.5″L x 18.5″W x 16.5″H</p>
+                        </td>
+                      </tr>
+                      <tr class="folded-w-wheels">
+                        <th>Folded (w/ wheels)</th>
+                        <td>
+                          <p>32.5″L x 24″W x 18.5″H</p>
+                        </td>
+                      </tr>
+                      <tr class="door-pass-through">
+                        <th>Door Pass Through</th>
+                        <td>
+                          <p>24</p>
+                        </td>
+                      </tr>
+                      <tr class="frame">
+                        <th>Frame</th>
+                        <td>
+                          <p>Aluminum</p>
+                        </td>
+                      </tr>
+                      <tr class="weight-wo-wheels">
+                        <th>Weight (w/o wheels)</th>
+                        <td>
+                          <p>20 LBS</p>
+                        </td>
+                      </tr>
+                      <tr class="weight-capacity">
+                        <th>Weight Capacity</th>
+                        <td>
+                          <p>60 LBS</p>
+                        </td>
+                      </tr>
+                      <tr class="width">
+                        <th>Width</th>
+                        <td>
+                          <p>24″</p>
+                        </td>
+                      </tr>
+                      <tr class="handle-height-ground-to-handle">
+                        <th>Handle height (ground to handle)</th>
+                        <td>
+                          <p>37-45″</p>
+                        </td>
+                      </tr>
+                      <tr class="wheels">
+                        <th>Wheels</th>
+                        <td>
+                          <p>12″ air / wide track slick tread</p>
+                        </td>
+                      </tr>
+                      <tr class="seat-back-height">
+                        <th>Seat back height</th>
+                        <td>
+                          <p>21.5″</p>
+                        </td>
+                      </tr>
+                      <tr class="head-room-inside-canopy">
+                        <th>Head room (inside canopy)</th>
+                        <td>
+                          <p>25″</p>
+                        </td>
+                      </tr>
+                      <tr class="pa_color">
+                        <th>Color</th>
+                        <td>
+                          <p>Black, Blue, Red, White</p>
+                        </td>
+                      </tr>
+                      <tr class="pa_size">
+                        <th>Size</th>
+                        <td>
+                          <p>M, S</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="tab-pane fade" id="Reviews">
+                  <!--Comments-->
+                  <div class="comments-area">
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <h4 class="mb-30">Customer questions & answers</h4>
+                        <div class="comment-list">
+                          <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                              <div class="thumb text-center">
+                                <img src="public/assets/imgs/page/avatar-6.jpg" alt="" />
+                                <h6><a href="#">Jacky Chan</a></h6>
+                                <p class="font-xxs">Since 2012</p>
+                              </div>
+                              <div class="desc">
+                                <div class="product-rate d-inline-block">
+                                  <div class="product-rating" style="width: 90%"></div>
+                                </div>
+                                <p>
+                                  Thank you very fast shipping from Poland
+                                  only 3days.
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                  <div class="d-flex align-items-center">
+                                    <p class="font-xs mr-30">
+                                      December 4, 2020 at 3:12 pm
+                                    </p>
+                                    <a href="#" class="text-brand btn-reply">Reply
+                                      <i class="fi-rs-arrow-right"></i>
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--single-comment -->
+                          <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                              <div class="thumb text-center">
+                                <img src="public/assets/imgs/page/avatar-7.jpg" alt="" />
+                                <h6><a href="#">Ana Rosie</a></h6>
+                                <p class="font-xxs">Since 2008</p>
+                              </div>
+                              <div class="desc">
+                                <div class="product-rate d-inline-block">
+                                  <div class="product-rating" style="width: 90%"></div>
+                                </div>
+                                <p>Great low price and works well.</p>
+                                <div class="d-flex justify-content-between">
+                                  <div class="d-flex align-items-center">
+                                    <p class="font-xs mr-30">
+                                      December 4, 2020 at 3:12 pm
+                                    </p>
+                                    <a href="#" class="text-brand btn-reply">Reply
+                                      <i class="fi-rs-arrow-right"></i>
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--single-comment -->
+                          <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                              <div class="thumb text-center">
+                                <img src="public/assets/imgs/page/avatar-8.jpg" alt="" />
+                                <h6><a href="#">Steven Keny</a></h6>
+                                <p class="font-xxs">Since 2010</p>
+                              </div>
+                              <div class="desc">
+                                <div class="product-rate d-inline-block">
+                                  <div class="product-rating" style="width: 90%"></div>
+                                </div>
+                                <p>
+                                  Authentic and Beautiful, Love these way
+                                  more than ever expected They are Great
+                                  earphones
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                  <div class="d-flex align-items-center">
+                                    <p class="font-xs mr-30">
+                                      December 4, 2020 at 3:12 pm
+                                    </p>
+                                    <a href="#" class="text-brand btn-reply">Reply
+                                      <i class="fi-rs-arrow-right"></i>
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--single-comment -->
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <h4 class="mb-30">Customer reviews</h4>
+                        <div class="d-flex mb-30">
+                          <div class="product-rate d-inline-block mr-15">
+                            <div class="product-rating" style="width: 90%"></div>
+                          </div>
+                          <h6>4.8 out of 5</h6>
+                        </div>
+                        <div class="progress">
+                          <span>5 star</span>
+                          <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50"
+                            aria-valuemin="0" aria-valuemax="100">
+                            50%
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <span>4 star</span>
+                          <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25"
+                            aria-valuemin="0" aria-valuemax="100">
+                            25%
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <span>3 star</span>
+                          <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45"
+                            aria-valuemin="0" aria-valuemax="100">
+                            45%
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <span>2 star</span>
+                          <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65"
+                            aria-valuemin="0" aria-valuemax="100">
+                            65%
+                          </div>
+                        </div>
+                        <div class="progress mb-30">
+                          <span>1 star</span>
+                          <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85"
+                            aria-valuemin="0" aria-valuemax="100">
+                            85%
+                          </div>
+                        </div>
+                        <a href="#" class="font-xs text-muted">How are ratings calculated?</a>
+                      </div>
+                    </div>
+                  </div>
+                  <!--comment form-->
+                  <div class="comment-form">
+                    <h4 class="mb-15">Add a review</h4>
+                    <div class="product-rate d-inline-block mb-30"></div>
+                    <div class="row">
+                      <div class="col-lg-8 col-md-12">
+                        <form class="form-contact comment_form" action="#" id="commentForm">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="form-group">
+                                <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
+                                  placeholder="Write Comment"></textarea>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <input class="form-control" name="name" id="name" type="text" placeholder="Name" />
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <input class="form-control" name="email" id="email" type="email" placeholder="Email" />
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <div class="form-group">
+                                <input class="form-control" name="website" id="website" type="text"
+                                  placeholder="Website" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <button type="submit" class="button button-contactForm">
+                              Submit Review
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-60">
+              <div class="col-12">
+                <h3 class="section-title style-1 mb-30">
+                  Related products
+                </h3>
+              </div>
+              
+<div class="col-lg-12 col-md-12">
+  <div class="tab-content wow fadeIn animated" id="myTabContent-1">
+      <div class="tab-pane fade show active" id="tab-one-1" role="tabpanel"
+          aria-labelledby="tab-one-1">
+          <div class="carausel-4-columns-cover arrow-center position-relative">
+              <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow"
+                  id="carausel-4-columns-arrows"></div>
+              <div class="carausel-4-columns carausel-arrow-center"
+                  id="carausel-4-columns">
+                  <% if (relatedProducts) { %>
+                    <% for(let i=0 ; i < relatedProducts.length ; i++) { %>
+                            <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                <div class="product-cart-wrap small hover-up" style=" border: 1px   solid rgb(169, 192, 175); ">
+                                    <div class="product-img-action-wrap" >
+                                        <div class="product-img product-img-zoom">
+                                            <a href="/shop-product?id=<%=relatedProducts[i]._id%>" tabindex="0">
+                                                <img class="default-img" src="/public/uploads/<%=relatedProducts[i].Images[0]%>" alt="" />
+                                                <img class="hover-img" src="/public/uploads/<%=relatedProducts[i].Images[1] %>" alt="" />
+                                            </a>
+                                        </div>
+                                          <div class="product-action-1">
+                                       <a aria-label="Add To Wishlist" class="action-btn hover-up"
+                                                        href="/wishlist?id=<%= relatedProducts[i]._id %>"><i class="fi-rs-heart"></i></a>
+                                               <i class="fi-rs-heart"></i></a>
+                                          
+                                        </div>
+                                        <div class="product-badges product-badges-position product-badges-mrg">
+                                            <span class="hot">Hot</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <h2>
+                                            <a href="/shop-product?id=<%=relatedProducts[i]._id%>" tabindex="0">
+                                               <%=relatedProducts[i].Bookname%>
+                                            </a>
+                                        </h2>
+                                        <div class="rating-result" title="90%">
+                                            <span> </span>
+                                        </div>
+                                        <div class="product-price">
+                                            <span>
+                                                <%= relatedProducts[i].saleprice %>
+                                            </span>
+                                            <span class="old-price">$<%=relatedProducts[i].Regularprice %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% }; %>
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+              <!-- ............................................ -->
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+  </main>
+  <footer class="main">
+    <section class="newsletter p-30 text-white wow fadeIn animated">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-7 mb-md-3 mb-lg-0">
+            <div class="row align-items-center">
+              <div class="col flex-horizontal-center">
+                <!-- <img class="icon-email" src="public/assets/imgs/theme/icons/icon-email.svg" alt="" /> -->
+                <!-- <h4 class="font-size-20 mb-0 ml-3">Sign up to Newsletter</h4> -->
+              </div>
+              <div class="col my-4 my-md-0 des">
+                <h5 class="font-size-15 ml-4 mb-0">
+                  <!-- ...and receive -->
+                  <!-- <strong>$25 coupon for first shopping.</strong> -->
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <!-- Subscribe Form -->
+            <form class="form-subcriber d-flex wow fadeIn animated">
+              <!-- <input type="email" class="form-control bg-white font-small" placeholder="Enter your email" /> -->
+              <!-- <button class="btn bg-dark text-white" type="submit"> -->
+                <!-- Subscribe -->
+              <!-- </button> -->
+            </form>
+            <!-- End Subscribe Form -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-padding footer-mid">
+      <div class="container pt-15 pb-20">
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="widget-about font-md mb-md-5 mb-lg-0">
+              <div class="logo logo-width-1 wow fadeIn animated">
+                <a href="index.html"><img src="/public/main-logo (1).png" alt="logo" /></a>
+              </div>
+              <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">
+                Contact
+              </h5>
+              <p class="wow fadeIn animated">
+                <strong>Address: </strong>562 Wellington Road, Street 32, San
+                Francisco
+              </p>
+              <p class="wow fadeIn animated">
+                <strong>Phone: </strong>+01 2222 365 /(+91) 01 2345 6789
+              </p>
+              <p class="wow fadeIn animated">
+                <strong>Hours: </strong>10:00 - 18:00, Mon - Sat
+              </p>
+              <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">
+                Follow Us
+              </h5>
+              <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
+                <a href="https://www.instagram.com/franceisjoe/"><img src="public/assets/imgs/theme/icons/icon-instagram.svg" alt="" /></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3">
+            <h5 class="widget-title wow fadeIn animated">About</h5>
+            <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Delivery Information</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Support Center</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-3">
+            <h5 class="widget-title wow fadeIn animated">My Account</h5>
+            <ul class="footer-list wow fadeIn animated">
+              <li><a href="#">Sign In</a></li>
+              <li><a href="#">View Cart</a></li>
+              <li><a href="#">My Wishlist</a></li>
+              <li><a href="#">Track My Order</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Order</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h5 class="widget-title wow fadeIn animated">Install App</h5>
+            <div class="row">
+              <div class="col-md-8 col-lg-12">
+                <p class="wow fadeIn animated">
+                  From App Store or Google Play
+                </p>
+                <div class="download-app wow fadeIn animated">
+                  <a href="#" class="hover-up mb-sm-4 mb-lg-0"><img class="active"
+                      src="public/assets/imgs/theme/app-store.jpg" alt="" /></a>
+                  <a href="#" class="hover-up"><img src="public/assets/imgs/theme/google-play.jpg" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                <p class="mb-20 wow fadeIn animated">
+                  Secured Payment Gateways
+                </p>
+                <img class="wow fadeIn animated" src="public/assets/imgs/theme/payment-method.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   
+  </footer>
+  <!-- Preloader Start -->
+  <div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+      <div class="preloader-inner position-relative">
+        <div class="text-center">
+          <h5 class="mb-5">Now Loading</h5>
+          <div class="loader">
+            <div class="bar bar1"></div>
+            <div class="bar bar2"></div>
+            <div class="bar bar3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Vendor JS-->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Initialize Magic Zoom on the product image
+      new MagicZoom('product-image');
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    async function addToCart(productId) {
+        try {
+            const response = await fetch(`/addToCart?id=${productId}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                // Product added to cart successfully
+                toastr.success('Product added to cart');
+
+                // Update the cart count in the UI
+                const cartCountSpan = document.getElementById('cart-count');
+                if (cartCountSpan) {
+                    cartCountSpan.textContent = parseInt(cartCountSpan.textContent) + 1;
+                }
+            } else {
+                // Product out of stock or other error
+                toastr.error(data.error);
+            }
+        } catch (error) {
+            // Error occurred during fetch operation
+            toastr.error('Stock limit exeeded');
+            console.error('Stock limit exeeded:', error);
+        }
+    }
+</script>
+
+  
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+         <script src="/public/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="public/assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <script src="public/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="public/assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <script src="public/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+  <script src="public/assets/js/vendor/bootstrap.bundle.min.js"></script>
+  <script src="public/assets/js/plugins/slick.js"></script>
+  <script src="public/assets/js/plugins/jquery.syotimer.min.js"></script>
+  <script src="public/assets/js/plugins/wow.js"></script>
+  <script src="public/assets/js/plugins/jquery-ui.js"></script>
+  <script src="public/assets/js/plugins/perfect-scrollbar.js"></script>
+  <script src="public/assets/js/plugins/magnific-popup.js"></script>
+  <script src="public/assets/js/plugins/select2.min.js"></script>
+  <script src="public/assets/js/plugins/waypoints.js"></script>
+  <script src="public/assets/js/plugins/counterup.js"></script>
+  <script src="public/assets/js/plugins/jquery.countdown.min.js"></script>
+  <script src="public/assets/js/plugins/images-loaded.js"></script>
+  <script src="public/assets/js/plugins/isotope.js"></script>
+  <script src="public/assets/js/plugins/scrollup.js"></script>
+  <script src="public/assets/js/plugins/jquery.vticker-min.js"></script>
+  <script src="public/assets/js/plugins/jquery.theia.sticky.js"></script>
+  <script src="public/assets/js/plugins/jquery.elevatezoom.js"></script>
+  <!-- Template  JS -->
+  <script src="public/assets/js/maind134.js?v=3.4"></script>
+  <script src="public/assets/js/shopd134.js?v=3.4"></script>
+</body>
+<% } else { %>
+  <h1 style="color: #ff0000; background-color: #f0f0f0; text-align: center; width: 100%; padding: 20px 0;">Invalid _id</h1>
+<% } %>
+
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-frontend/shop-product-right.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Jul 2023 10:10:05 GMT -->
+
+</html>

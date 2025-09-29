@@ -1,0 +1,198 @@
+<style>   .logo.logo-width-1 a img {
+    min-width: 200px;
+    }</style>
+<header class="header-area header-style-1 header-height-2">
+    <div class="header-top header-top-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info">
+                        <ul>
+                            <li><i class="fi-rs-smartphone"></i> <a href="#">(+01) - 2345 - 6789</a></li>
+                            <li><i class="fi-rs-marker"></i><a  href="page-contact.html">Our location</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-4">
+                    <div class="text-center">
+                        <div id="news-flash" class="d-inline-block">
+                            <ul>
+                                <li>Get Books up to 50% off <a href="/loadShop">View details</a></li>
+                                <!-- <li>Supper Value Deals - Save more with coupons</li> -->
+                                <!-- <li>Trendy 25silver jewelry, save up 35% off today <a href="shop-grid-right.html">Shop now</a></li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>  
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info header-info-right">
+                        <ul>
+                            <li>
+                                <a class="language-dropdown-active" href="#"> <i class="fi-rs-world"></i> English 
+                                    <!-- <i class="fi-rs-angle-small-down"></i> -->
+                                </a>
+                                <!-- <ul class="language-dropdown"> -->
+                                    <!-- <li><a href="#"><img src="/public/assets/imgs/theme/flag-fr.png" alt="">Français</a></li> -->
+                                    <!-- <li><a href="#"><img src="/public/assets/imgs/theme/flag-dt.png" alt="">Deutsch</a></li> -->
+                                    <!-- <li><a href="#"><img src="/public/assets/imgs/theme/flag-ru.png" alt="">Pусский</a></li> -->
+                                <!-- </ul> -->
+                            </li>
+                            <li class="dropdown nav-item">
+                                <% if(locals.name){ %>
+                                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"><span><%=name%></span></a>
+                                    <% } else { %>
+                                        <a href="/login"><span>Login</span></a>
+                                <% } %>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                                    <!-- <a class="dropdown-item" href="/loadProfile"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                                    <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                                    <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a> -->
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="/logout"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                                </div>
+                            </li>
+                            <!-- <a href="/login"></a> -->
+                        </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="header-wrap">
+                <div class="logo logo-width-1">
+                    <a href="/home"><img src="/public/main-logo (1).png" alt="logo"></a>
+                </div>
+                <div class="header-right">
+                    <div class="search-style-2">
+
+                        <%if(locals.search){ %>
+
+                            <form action="/loadShop" class="premium-search-form">
+                            
+                                <input type="text" name="query"   value="<%=search%>" placeholder="Search for items...">
+                            </form>
+    
+
+                       <% }else { %>
+                            <form action="/loadShop" class="premium-search-form">
+                            
+                                <input type="text" name="query"    placeholder="Search for items...">
+                            </form>
+                       <% } %>
+                      
+                        
+                    </div>
+                    <div class="header-action-right">
+                        <div class="header-action-2">
+                            <%if(locals.wishlistLength){%>
+
+                            <div class="header-action-icon-2">
+                                <a href="getWishlist">
+                                    <img class="svgInject" alt="Evara" src="/public/assets/imgs/theme/icons/icon-heart.svg">
+                                    <span class="pro-count blue"><%= wishlistLength %></span>
+                                </a>
+                            </div>
+                            <%}else{%>
+                                <div class="header-action-icon-2">
+                                    <a href="getWishlist">
+                                        <img class="svgInject" alt="Evara" src="/public/assets/imgs/theme/icons/icon-heart.svg">
+                                        <span class="pro-count blue">0</span>
+                                    </a>
+                                </div>
+                                <%}%>
+                            <%if(locals.cartLength){ %>
+                            <div class="header-action-icon-2">
+                                <div class="header-action-icon-2">
+                                    <a class="mini-cart-icon" href="/cart">
+                                        <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-cart.svg">
+                                        <span id="cart-count" class="pro-count blue"><%= cartLength %></span>
+                                    </a>
+                                </div>
+                                <% }else { %>
+                                    <div class="header-action-icon-2">
+                                        <div class="header-action-icon-2">
+                                            <a class="mini-cart-icon" href="/cart">
+                                                <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-cart.svg">
+                                                <span class="pro-count blue">0</span>
+                                            </a>
+                                        </div>
+                                <% } %>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom header-bottom-bg-color sticky-bar">
+        <div class="container">
+            <div class="header-wrap header-space-between position-relative">
+                <div class="logo logo-width-1 d-block d-lg-none">
+                    <a href="/home"><img src="/public/main-logo (1).png" alt="logo"></a>
+                </div>
+                <div class="header-nav d-none d-lg-flex">
+                    
+                    <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                        <nav>
+                            <ul>
+                                <li><a class="active" href="/home">Home</i></a>
+                                   
+                                </li>
+                                <li>
+                                    <a href="/loadProfile">Profile</a>
+                                </li>
+                                <li><a href="/loadShop">Shop</i></a>
+                          
+                                </li>
+                                <!-- <li class="position-static"><a href="#">Mega menu</i></a> -->
+                                    
+                                </li>
+                                <!-- <li><a href="blog-category-grid.html">Blog</i></a> -->
+                                  
+                                </li>
+                                <!-- <li><a href="#">Pages</i></a> -->
+                                   
+                                </li>
+                                <li>
+                                    <a href="/getContact">Contact</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="hotline d-none d-lg-block">
+                    <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p>
+                </div>
+                <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p>
+                <div class="header-action-right d-block d-lg-none">
+                    <div class="header-action-2">
+                        <div class="header-action-icon-2">
+                            <a href="/getWishlist">
+                                <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-heart.svg">
+                                <span class="pro-count white">.</span>
+                            </a>
+                        </div>
+                        <div class="header-action-icon-2">
+                            <a class="mini-cart-icon" href="/cart">
+                                <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-cart.svg">
+                                <span class="pro-count white">.</span>
+                            </a>
+                            
+                        </div>
+                        <div class="header-action-icon-2 d-block d-lg-none">
+                            <div class="burger-icon burger-icon-white">
+                                <span class="burger-icon-top"></span>
+                                <span class="burger-icon-mid"></span>
+                                <span class="burger-icon-bottom"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+
+<head>
+  <meta charset="utf-8" />
+  <title> BOOK-SAW</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png" />
+  <!-- Template CSS -->
+  <link href="/public/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+
+
+<style>
+  .bg-primary-light {
+  background-color: #cce5ff; /* Light blue */
+}
+
+.bg-secondary-light {
+  background-color: #e2e3e5; /* Light gray */
+}
+
+.bg-danger-light {
+  background-color: #f8d7da; /* Light red */
+}
+
+.bg-success-light {
+  background-color: #d4edda; /* Light green */
+}
+#example {
+      width: 1200px;
+      height: auto;
+      /* You can adjust the height as needed */
+    }
+
+    #example {
+      width: 1200px;
+      height: auto;
+      /* You can adjust the height as needed */
+    }
+
+    .price-cell {
+      font-size: 16px;
+      /* Adjust as needed */
+      position: relative;
+      /* Position the elements relative to this container */
+    }
+
+    .price-symbol {
+      font-size: 1.2em;
+      /* Adjust as needed */
+    }
+
+    .big-number {
+      font-size: 1.2em;
+      /* Adjust as needed */
+    }
+
+    .decimal {
+      font-size: 0.8em;
+      /* Adjust as needed */
+    }
+
+    .small-number {
+      font-size: 0.8em;
+      /* Adjust as needed */
+      position: absolute;
+      /* Position absolutely */
+      top: 50%;
+      /* Position at 50% from the top */
+      right: 0;
+      /* Align to the right */
+      transform: translateY(-50%);
+      /* Center vertically based on its own height */
+    }
+</style>
+</head>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<body>
+  <div class="screen-overlay"></div>
+  <%-include('../partials/adminAside')-%>
+    <main class="main-wrap">
+      <%-include('../partials/adminHeader')-%>
+        <section class="content-main">
+          <div class="content-header">
+            <div>
+              <h2 class="content-title card-title">Order List</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+
+          </div>
+          <div class="card mb-4">
+
+            <!-- card-header end// -->
+            <div class="card-body">
+              <div class="table-responsive">
+
+
+
+                <table id="example" class="display" style="width:1200px;height:600px" >
+                  <% if(orders && orders.length > 0) { %>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Total Amount</th>
+                            <th>Payment Method</th>
+                            <th>Date & Time</th>
+                            <th>Payment Status</th>
+                            <th>Order Status</th>
+                            <th>Change Status</th>
+                            <th class="text-end">Order Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = orders.length - 1; i >= 0; i--) { 
+                        const order = orders[i];
+                    %>
+            
+                            <tr>
+                                <td><%= order.orderId %></td>
+                                <td>$<%= order.totalAmount %></td>
+                                <td><%= order.paymentMethod %></td>
+                                <td><%= order.orderDate.toLocaleString() %></td>
+                                <td>
+                                    <span class="badge <%= order.paymentStatus === 'Received' ? 'bg-success-light' : 'bg-warning-light' %> text-dark">
+                                        <%= order.paymentStatus %>
+                                    </span>
+                                </td>
+                                <td>
+                                  <% if (order.paymentStatus !== 'Failed') { %>
+                                    <span class="badge <%= order.orderStatus === 'Shipped' ? 'bg-primary-light' : 
+                                                          (order.orderStatus === 'Returned' ? 'bg-secondary-light' : 
+                                                          (order.orderStatus === 'Cancelled' ? 'bg-danger-light' : 
+                                                          (order.orderStatus === 'Delivered' ? 'bg-success-light' : 'bg-warning-light'))) %> text-dark">
+                                        <%= order.orderStatus %>
+                                    </span>
+                                <% } %>
+                                
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-icon dropdown-toggle" type="button"
+                                            id="deliveryStatusDropdown_<%= order._id %>" data-bs-toggle="dropdown" aria-expanded="false"
+                                            <% if (order.orderStatus === 'Delivered' || order.orderStatus === 'Returned' || order.orderStatus === 'Cancelled'|| order.paymentStatus === "Failed") { %>
+                                                disabled
+                                            <% } %>
+                                            <b>Status</b>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="deliveryStatusDropdown_<%= order._id %>">
+                                            <li><a class="dropdown-item" href="/admin/adminOrderpending?id=<%= order._id %>">Order Placed</a></li>
+                                            <li><a class="dropdown-item" href="/admin/adminOrderShipped?id=<%= order._id %>">Shipped</a></li>
+                                            <li><a class="dropdown-item" href="/admin/adminOrderDelivered?id=<%= order._id %>">Delivered</a></li>
+                                            <li><a class="dropdown-item" href="/admin/adminOrderCancelled?id=<%= order._id %>">Cancelled</a></li>
+                                            <li><a class="dropdown-item" href="/admin/adminOrderReturned?id=<%= order._id %>">Returned</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <a href="/admin/loadOrderDetails?id=<%=order._id%>" class="btn btn-sm btn-outline-dark">Order Detail</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                <% } else { %>
+                    <h3 style="font-size: 28px; font-weight: bold; color: #000000; text-transform: uppercase; border-bottom: 2px solid #007bff; padding-bottom: 5px;">No orders found</h3>
+                <% } %>
+                
+
+                    </table>
+
+
+
+            </div>
+            <!-- table-responsive //end -->
+          </div>
+          <!-- card-body end// -->
+          </div>
+          <!-- card end// -->
+
+        </section>
+        <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+          <div class="row pb-30 pt-15">
+            <div class="col-sm-6">
+              <script data-cfasync="false"
+                src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              ©,BOOK-SAW
+            </div>
+            <div class="col-sm-6">
+              <div class="text-sm-end">All rights reserved</div>
+            </div>
+          </div>
+        </footer>
+    </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const changeStatusSelects = document.querySelectorAll(".change-status");
+
+        changeStatusSelects.forEach(select => {
+          select.addEventListener("change", function () {
+            const selectedOption = select.options[select.selectedIndex];
+            const orderStatusCell = select.parentElement.previousElementSibling;
+            orderStatusCell.innerHTML = `<span class="badge bg-warning text-dark">${selectedOption.text}</span>`;
+            // Here you can send an AJAX request to update the order status in the database
+          });
+        });
+      });
+
+    </script>
+    <script src="/public/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/public/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/public/admin-assets/js/main.js" type="text/javascript"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+new DataTable('#example', {
+    order: false
+});
+    </script>
+
+
+</body>
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:22 GMT -->
+
+</html>

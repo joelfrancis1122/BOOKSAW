@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #f4f4f4;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background-color: #2b2b2b;
+            overflow: hidden;
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .card-header {
+            background-image: linear-gradient(to right, #9b59b6, #8e44ad);
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .card-header h4 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.6rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            font-size: 0.9rem;
+            border: none;
+            background-color: #3b3b3b;
+            color: #f4f4f4;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #9b59b6;
+            color: #fff;
+            border: none;
+            box-shadow: 0 8px 15px rgba(155, 89, 182, 0.3);
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #8e44ad;
+            box-shadow: 0 12px 20px rgba(155, 89, 182, 0.5);
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox label {
+            position: relative;
+            cursor: pointer;
+            padding-left: 2rem;
+        }
+
+        .custom-checkbox label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid #9b59b6;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+label:before {
+            background-color: #9b59b6;
+            border-color: #9b59b6;
+        }
+
+        .swal2-container {
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .swal2-popup {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .swal2-header {
+            background-color: #2b2b2b;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .swal2-title {
+            color: #f4f4f4;
+            font-weight: 600;
+        }
+
+        .swal2-close {
+            color: #f4f4f4;
+        }
+
+        .swal2-close:hover {
+            color: #d0d0d0;
+        }
+
+        .swal2-content {
+            color: #f4f4f4;
+        }
+
+        .swal2-actions {
+            background-color: #2b2b2b;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .swal2-confirm {
+            background-color: #007bff;
+            color: #f4f4f4;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .swal2-confirm:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card" style="max-width: 500px;">
+            <div class="card-header">
+                <h4>Forgot Password</h4>
+            </div>
+            <div class="card-body" style="padding: 2rem;">
+                <form action="/forgotpassword" method="POST">
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="email">Enter Your Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" required style="width: 400px">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" onclick="sendResetEmail()">Send Reset Email</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+    
+                try {
+                    const response = await fetch('/forgotpassword', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email }),
+                    });
+                    const data = await response.json();
+    
+                    if (data.message === 'Reset email sent') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Reset email sent',
+                            customClass: {
+                                container: 'swal2-container',
+                                popup: 'swal2-popup',
+                                header: 'swal2-header',
+                                title: 'swal2-title',
+                                closeButton: 'swal2-close',
+                                content: 'swal2-content',
+                                actions: 'swal2-actions',
+                                confirmButton: 'swal2-confirm',
+                            },
+                            background: '#1e1e1e',
+                            color: '#f4f4f4',
+                            html: `
+                                <p>Click the button below to open Gmail:</p>
+                                <button id="openGmail" class="btn btn-primary">Open Gmail</button>
+                            `,
+                            didOpen: () => {
+                                const openGmailButton = document.getElementById('openGmail');
+                                openGmailButton.addEventListener('click', () => {
+                                    window.open('https://mail.google.com/', '_blank');
+                                });
+                            }
+                        });
+    
+                        // Disable the button and start the timer
+                        document.querySelector('.btn-primary').disabled = true;
+                        startResetTimer();
+    
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.message || 'An error occurred',
+                            customClass: {
+                                container: 'swal2-container',
+                                popup: 'swal2-popup',
+                                header: 'swal2-header',
+                                title: 'swal2-title',
+                                closeButton: 'swal2-close',
+                                content: 'swal2-content',
+                                actions: 'swal2-actions',
+                                confirmButton: 'swal2-confirm',
+                            },
+                            background: '#1e1e1e',
+                            color: '#f4f4f4',
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error sending reset email',
+                        customClass: {
+                            container: 'swal2-container',
+                            popup: 'swal2-popup',
+                            header: 'swal2-header',
+                            title: 'swal2-title',
+                            closeButton: 'swal2-close',
+                            content: 'swal2-content',
+                            actions: 'swal2-actions',
+                            confirmButton: 'swal2-confirm',
+                        },
+                        background: '#1e1e1e',
+                        color: '#f4f4f4',
+                    });
+                }
+            });
+        });
+    
+        let resetTimerDuration = 60; // 60 seconds for resend interval
+        let resetTimer;
+    
+        function startResetTimer() {
+            let seconds = resetTimerDuration;
+            resetTimer = setInterval(function () {
+                // Update button text to show countdown
+                document.querySelector('.btn-primary').textContent = `Resend in ${seconds} seconds`;
+    
+                if (--seconds < 0) {
+                    // Timer has expired, reset button text and enable the button
+                    clearInterval(resetTimer);
+                    document.querySelector('.btn-primary').textContent = 'Send Reset Email';
+                    document.querySelector('.btn-primary').disabled = false;
+                }
+            }, 1000); // Update every 1 second
+        }
+    </script>
+    
+</body>
+
+</html>

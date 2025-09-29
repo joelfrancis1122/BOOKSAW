@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>BOOKSAW</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    width: 100%;
+    background: #f6f9f8;
+  }
+
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .container .registration {
+    display: none;
+  }
+
+  #check:checked~.registration {
+    display: block;
+  }
+
+  #check:checked~.login {
+    display: none;
+  }
+
+  #check {
+    display: none;
+  }
+
+  .container .form {
+    padding: 2rem;
+  }
+
+  .form header {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .form input {
+    height: 60px;
+    width: 100%;
+    padding: 0 15px;
+    font-size: 17px;
+    margin-bottom: 1.3rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+  }
+
+  .form input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .form a {
+    font-size: 16px;
+    color: #088178;
+    text-decoration: none;
+  }
+
+  .form a:hover {
+    text-decoration: underline;
+  }
+
+  .form input.button {
+    color: #fff;
+    background: #088178;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: 1.7rem;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+
+  .form input.button:hover {
+    background: #088178;
+  }
+
+  .signup {
+    font-size: 17px;
+    text-align: center;
+  }
+
+  .signup label {
+    color: #088178;
+    cursor: pointer;
+  }
+
+  .signup label:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <input type="checkbox" id="check" />
+    <div class="login form">
+      <header>Signup</header>
+      <form action="/verifySignup" id="form" method="post">
+        <input type="text" id="name" placeholder="Enter your name" name="name" />
+        <div class="error" id="nameError" style="color: red;"></div> <!-- Error message placeholder for name -->
+        <input type="email" id="email" name="email" placeholder="Enter your email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required />
+        <div class="error" id="emailError" style="color: red;"></div> <!-- Error message placeholder for email -->
+        <input type="tel" id="mobile" maxlength="10" placeholder="Enter your mobile" name="mobile" pattern="^\d{10}$" required />
+        <div class="error" id="mobileError" style="color: red;"></div> <!-- Error message placeholder for mobile -->
+        <input type="password" id="password" placeholder="Enter your password" name="password" pattern=".{8,}" required />
+        <div class="error" id="passwordError" style="color: red;"></div> <!-- Error message placeholder for password -->
+        <input type="password" id="cpassword" placeholder="Confirm password" name="cpassword" pattern=".{8,}" required />
+        <div class="error" id="cpasswordError" style="color: red;"></div> <!-- Error message placeholder for confirm password -->
+
+        <input type="submit" class="button" value="signup" onclick="return validateForm()" />
+        <h3 class="text-center text-danger" id="loginErrorMessage">
+            <%=locals.errmessage ? errmessage : '' %>
+        </h3>
+        <h3 class="text-center text-success" id="loginSuccessMessage">
+            <%=locals.successMessage ? successMessage : '' %>
+        </h3>
+    </form>
+    </div>
+  </div>
+  <script>
+    function validateForm() {
+        var name = document.getElementById("name").value;
+        var password = document.getElementById("password").value;
+        var cpassword = document.getElementById("cpassword").value;
+        var alphabeticWithSpacesRegex = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+        var isValid = true;
+
+        // Reset error messages
+        document.getElementById("nameError").innerText = "";
+        document.getElementById("passwordError").innerText = "";
+        document.getElementById("cpasswordError").innerText = "";
+
+        // Validate name
+        if (!alphabeticWithSpacesRegex.test(name)) {
+            document.getElementById("nameError").innerText = "Type alphabetic characters with spaces only between alphabetic characters.";
+            isValid = false;
+        }
+
+        // Validate password mismatch
+        if (password !== cpassword) {
+            document.getElementById("passwordError").innerText = "Password mismatch";
+            document.getElementById("cpasswordError").innerText = "Password mismatch";
+            isValid = false;
+        }
+
+        // Clear error messages after 5 seconds
+        setTimeout(() => {
+            document.getElementById("nameError").innerText = "";
+            document.getElementById("passwordError").innerText = "";
+            document.getElementById("cpasswordError").innerText = "";
+        }, 5000);
+
+        return isValid;
+    }
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <%if(locals.emailExists){%>
+    <script>
+      Swal.fire({
+        icon: 'warning',
+        title: 'Email already exists!',
+      })
+    </script>
+    <%}%>
+
+      <script>
+        window.onload = () => {
+          console.log('inside');
+
+          let res = document.getElementById("loginErrorMessage").innerText;
+          if (res) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+              footer: '<a href="#">You have entered wrong OTP</a>',
+            });
+          }
+        };
+
+      </script>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <script>
+
+
+      </script>
+
+
+      </script>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      <style>
+        /* Custom CSS to change the Toastr color to black */
+        .black-toast {
+          background-color: black !important;
+          color: white !important;
+        }
+      </style>
+</body>
+
+</html>

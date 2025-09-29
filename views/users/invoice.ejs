@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>BOOKSAW</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+    <!-- Template CSS -->
+    <link href="public/assets/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/public/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .main-wrap {
+                max-width: 200%;
+                height: auto !important;
+            }
+
+            .content-main {
+                height: auto !important;
+                page-break-inside: avoid !important;
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                background-color: #f9f9f9;
+            }
+
+            .main-footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body id="target">
+
+    <main style="padding: 40px;">
+        <% if (locals.orders) { %>
+            <div class="content-header">
+                <div class="content-header text-center" style="justify-content: center;">
+                    <h2 class="content-title card-title inline-center" style="margin-bottom: 20px;">Invoice</h2>
+                </div>
+            </div>
+            <div class="card" style="border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); background-color: #fff;">
+                <header class="card-header" style="background-color: #f0f0f0; padding: 10px;">
+                    <div class="row align-items-center">
+                        <div class="col-lg-9 col-md-6 mb-lg-0 mb-15">
+                            <span>
+                                <i class="material-icons md-calendar_today"></i>
+                                <b><%=orders.orderDate.toLocaleString()%></b>
+                            </span> <br>
+                            <small class="text-muted">Order ID: <%=orders.orderId%></small>
+                            <br><br>
+                            <a href="#"><img src="/public/main-logo (1).png" alt="logo"></a>
+                        </div>
+                    </div>
+                            <div class="col-lg-6 col-md-6 ms-auto text-md-end" id="printButtonContainer">
+                                    <a class="btn btn-primary" href="#" onclick="printAndRemoveButton()" id="printButton">
+                                        Print <i class="icon material-icons md-print"></i>
+                                    </a>
+                                </div>         
+                                           <button id="cmd" style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s;">
+                        Get PDF
+                    </button>
+                    
+                    
+                </header>
+                <div class="card-body" style="padding: 20px;">
+                    <div class="receipt-content">
+                        <div class="container bootstrap snippets bootdey">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="invoice-wrapper">
+                                        <div class="intro">
+                                            Hi <strong> <%=address.name%></strong>,
+                                            <br>
+                                            This is the receipt for your order.
+                                        </div>
+                                        <div class="payment-info" style="margin-bottom: 20px;">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span>Payment No.</span>
+                                                    <strong><%=orders.orderId%></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="payment-details" style="margin-bottom: 20px;">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span>Customer</span>
+                                                    <strong><%=address.name%></strong>
+                                                    <p>Phone: <%=address.mobile%></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="line-items">
+                                            <table class="table" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 5px;">
+                                                <thead>
+                                                    <tr style="background-color: #f3f3f3;">
+                                                        <th style="padding: 10px; border-bottom: 1px solid #ddd;">Book Name</th>
+                                                        <th style="padding: 10px; border-bottom: 1px solid #ddd;">Unit Price</th>
+                                                        <th style="padding: 10px; border-bottom: 1px solid #ddd;">Quantity</th>
+                                                        <th style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% let grandTotal = 0; %>
+                                                    <% for(let order of orders.product) { %>
+                                                    <tr class="item" <% if (order.productStatus === 'Cancelled') { %>style="text-decoration: line-through;"<% } %>>
+                                                        <td class="desc" style="padding: 10px; border-bottom: 1px solid #ddd;"><%= order.productId.Bookname %></td>
+                                                        <td class="price" style="padding: 10px; border-bottom: 1px solid #ddd;">$ <%=  order.price %></td>
+                                                        <td class="qty" style="padding: 10px; border-bottom: 1px solid #ddd;"><%= order.quantity %></td>
+                                                        <td class="amount" style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right;">$<%= (order.quantity * order.price).toFixed(2) %></td>
+                                                    </tr>
+                                                    <% grandTotal += order.quantity *  order.price; %>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                            
+                                            
+                                        </div>
+                                        <% if(orderData ) { %>
+                                        <div class="total" style="text-align: right; margin-top: 20px;">
+                                            <div class="field grand-total">
+                                                <h5><strong>Total: <span>$<%= orderData.totalAmount %></span></strong></h5>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+    
+
+    </main>
+    <footer class="main-footer font-xs">
+        <div class="row pb-30 pt-15">
+            <div class="col-sm-6">
+                <script>
+                    document.write(new Date().getFullYear())
+                </script> ©,BOOKSAW.
+            </div>
+            <div class="col-sm-6">
+          
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript">
+        function printAndRemoveButton() {
+            var printButton = document.getElementById("printButton");
+            printButton.style.display = "none"; // Hide the print button
+    
+            // Initiating PDF download
+            window.print();
+    
+            // Restore the print button after a short delay to ensure it's printed first
+            setTimeout(function() {
+                printButton.style.display = ""; // Restore the print button
+            }, 100);
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script>
+    $(document).ready(function(){
+
+        var specialElementHandler = {
+            "#editor": function(element, renderer){
+                return true;
+            }
+        };
+        
+        $("#cmd").click(function(){
+            var doc = new jsPDF();
+
+            doc.fromHTML($("#target").html(), 15, 15, {
+                "width": 170,
+                "elementHandlers": specialElementHandler // Corrected name here
+            });
+
+            doc.save("sample-file.pdf");
+        });
+
+    });
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cmd = document.getElementById("cmd");
+    cmd.addEventListener("click", function() {
+      // Hide the button
+      cmd.style.display = "none";
+
+      var element = document.getElementById("target");
+      var opt = {
+        margin: 1,
+        filename: 'sample-file.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait', width: 1, height:1 } // Set width and height here
+      };
+
+      // New Promise-based usage:
+      html2pdf().from(element).set(opt).save().then(function() {
+        // Restore the button after the PDF is generated
+        cmd.style.display = "";
+      });
+    });
+  });
+</script>
+
+
+    <script src="public/assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="public/assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="public/assets/js/vendors/select2.min.js"></script>
+    <script src="public/assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="public/assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="public/assets/js/main.js" type="text/javascript"></script>
+</body>
+
+</html>
