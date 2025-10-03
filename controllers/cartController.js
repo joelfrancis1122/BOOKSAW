@@ -88,9 +88,6 @@ const onlinePay = async (req, res) => {
             receipt: req.session.user
         });
 
-        console.log(order);
-        console.log(order2);
-
         res.json({ order2, order });
     } catch (error) {
         console.error(error);
@@ -144,10 +141,8 @@ const saveOrder = async(req, res) => {
         );
 
         if (order) {
-            console.log("Order payment status updated successfully");
             res.redirect("/orderSuccess");
         } else {
-            console.log("Failed to update order payment status");
             res.status(404).send("Order not found");
         }
     } catch (error) {
@@ -312,10 +307,7 @@ const loadCheckOut1 = async (req, res) => {
         let id = req.query.id
         req.session.buyNowProductId = id                           //buyNowProductId
         req.session.save()
-        console.log("Req buy now id :", req.session)
-        console.log("direct product buy id :", id)
         const product = await Product.findOne({ _id: id })
-        console.log("The product found : ", product)
         const userData = await User.findOne({ _id: userId });
         const addressData = await Address.find({ userId: userId });
         const wishlistData = await Wishlist.findOne({ userId: userId }).populate('product.productId')
@@ -333,7 +325,6 @@ const loadCheckOut1 = async (req, res) => {
 
 const placeOrder = async (req, res) => {
     try {
-        console.log("inside placeorder=++++++++++++++++++++", req.body);
         const userId = req.session.user;
         const { couponCode } = req.body;
         const coupon = await Coupon.findOne({ couponCode, isActive: true, expirationDate: { $gte: Date.now() } });
@@ -405,7 +396,6 @@ const placeOrder = async (req, res) => {
             productDataToSave = cart.product;
         }
 
-        console.log("Product data ::", productDataToSave);
 
         const order = new Orders({
             orderId: newOrderId,
@@ -490,8 +480,6 @@ const removeCoupon = async (req, res) => {
     try {
         const { couponCode } = req.body; // Assuming the coupon code is passed in the request body
         const userId = req.session.user; // Assuming you have the user's ID in the session
-        console.log(userId, "userID")
-        console.log(couponCode, "Coupon")
         // Find the coupon document based on the coupon code
         const updatedCoupon = await Coupon.findOneAndUpdate(
             { couponCode: couponCode },
@@ -583,9 +571,7 @@ const clearCart = async (req, res) => {
 };
 const googleAuth = async (req, res) => {
     try {
-        console.log("sdadadasd");
         const user = req.body.user;
-        console.log("user ",user);
         const email = user.email
         // Check if user already exists
         let userData;

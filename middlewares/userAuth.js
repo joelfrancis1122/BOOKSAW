@@ -44,7 +44,6 @@ const isBlocked = async(req,res,next)=>{
         if(user.is_active){
             next()
         }else{
-            console.log("User blovked")
             res.redirect('/logout');
         }
     } catch (error) {

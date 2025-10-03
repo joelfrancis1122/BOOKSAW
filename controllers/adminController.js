@@ -221,11 +221,8 @@ for (let i = 0; i < 12; i++) {
         totalAmountByMonth[i] = 0;
     }
 }
-          console.log('-------------------------------------',orderCountsByYear)
   
     
-        console.log(orderCountsByMonth, "3333333333333333333333333333333333333333");
-        console.log("---------------------------------------");
         // console.log(totalAmountByYear, "444444444444444444444444444444444444");
 
         res.render('admindashboard', { 
@@ -261,14 +258,12 @@ res.render('login')
 
 const productslist = async(req,res)=>{ 
     try{
-        console.log('worked ')
         let search = req.query.search ? req.query.search : "" 
         const productData = await Product.find({
             $and:[{
             Bookname: { $regex: new RegExp(search, "i") } },
             ],
         }).populate('Categories').sort({ CreatedOn: -1 })
-        console.log('k',productData)
         res.render('productslist',{product:productData,search:search})
     }catch(error){
 console.error(error);
@@ -339,7 +334,6 @@ const addSubCategories = async (req, res) => {
         const catData = await SubCategory.find()
         const existingCategory = await SubCategory.findOne({ subCategoryName: { $regex: new RegExp('^' + subCategoryName + '$', 'i') } });
         if (existingCategory) {
-            console.log("catrt//////////////",catData)
             return res.render('addSubcategories', { categoriesExists: true ,categories : catData}); 
         }
         const categories = new SubCategory({
@@ -378,7 +372,6 @@ const loadeditSubCategory = async(req,res)=>{
 const editCategory = async(req,res)=>{
     try{
         const { categoryName,Description,catid} = req.body
-        console.log("req.dsfsfsd fsdfdsf",req.body)
         const existingCategory = await Category.findOne({_id: { $ne: req.session.cateid }, categoryName: { $regex: new RegExp('^' + categoryName + '$', 'i') } });
         if(existingCategory){
              res.json({ success: false, error: 'Category name must be unique' });       
@@ -398,7 +391,6 @@ const editCategory = async(req,res)=>{
 const editSubCategory = async (req, res) => {
     try {
         const { subCategoryName, Description, catid } = req.body;
-        console.log(req.body, "sakldhlasdajldslh");
 
         const existingCategory = await SubCategory.findOne({_id: { $ne: req.session.subcateid }, subCategoryName: { $regex: new RegExp('^' + subCategoryName + '$', 'i') }
         });
@@ -618,7 +610,6 @@ const couponDelete = async (req, res) => {
     try {
         const couponId = req.query.id;
 
-        console.log("couponId------------",couponId)
         const deletedCoupon = await Coupon.findOneAndDelete({ _id: couponId });
 
         if (deletedCoupon) {
@@ -662,14 +653,11 @@ const applyAdminOffers = async(req,res)=>{
 
           const productsToUpdate = await Product.find({ Categories: categoryId });
           if (!productsToUpdate) {
-            console.log("============================================================")
             return res.status(404).json({ message: 'product not found' });
           }
-          console.log("productsToUpdate++++++++++++++++++++++++++",productsToUpdate)
           for (const product of productsToUpdate) {
           const updatedPrice = Math.round(product.saleprice * ((100 - discount) / 100));
           product.saleprice = updatedPrice;
-          console.log(updatedPrice,"++++++++++++++++ssadhgsadhsadghdsghasdghhdashsadhashhgasdhhgasdhgasdghgasghaahdhgadhj")
           await product.save();
          }
 

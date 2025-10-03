@@ -65,7 +65,6 @@ const loadGuest = async (req, res) => {
             }
         ]);
 
-        console.log("Product Data:", productData);
         const quote = Quote.getQuote();
 
         res.render('home', { 
@@ -136,8 +135,8 @@ const forgotpassword = async(req,res)=>{
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASS
+                user: "joelfrancis2005@gmail.com",
+                pass: "pxid psxq tcmm nwro"
             }
         });
              
@@ -198,7 +197,6 @@ const getResetPassword =async(req,res)=>{
 const resetpassword = async (req, res) => {
     const { token } = req.params;
     const { password, confirmPassword } = req.body;
-    console.log(req.session.forgotemail, "--------------------------------------------------------------------------------------")
     if (password !== confirmPassword) {
         return res.status(400).send({ message: 'Passwords do not match' });
     }
@@ -245,7 +243,6 @@ const loadHome = async (req, res) => {
 
         const cartLength = cartData ? cartData.product.length : 0;
         const wishlistLength = wishlistData ? wishlistData.product.length : 0;
-        console.log("Cart Length:", cartLength, "Wishlist Length:", wishlistLength);
 
         // Fetch active products with search query and populated categories
         const productData = await Product.find({
@@ -255,8 +252,6 @@ const loadHome = async (req, res) => {
         .populate('Categories') // Populate Categories field
         .populate('subCategories') // Populate subCategories field if needed
         .limit(12); // Limit to 12 products
-
-        console.log("Product Data:", productData);
 
         const quote = Quote.getQuote(); // Assuming this is a static method or function
         const userData = await User.findOne({ _id: userId });
@@ -386,7 +381,6 @@ const signup = async (req, res) => {
 
 const verifySignup = async (req, res) => {
     try {
-      console.log("hai");
       const matchEmail = await User.findOne({ email: req.body.email });
   
       if (matchEmail) {
@@ -520,7 +514,6 @@ const loadProfile = async (req, res) => {
         const userId = req.session.user;
         const userData = await User.findOne({ _id: userId });
 
-        console.log("User data : ", userData)
 
         const Order = await Orders.find({ userId: userId }).populate('userId').sort({ orderDate: -1 });
 
@@ -902,8 +895,6 @@ const removeAddress = async (req, res) => {
 
 const OrderCancelled = async (req, res) => {
     try {
-        console.log("333333saaaaaaa333333");
-
         const orderId = req.query.id;
         const userId = req.session.user;
 
@@ -960,7 +951,6 @@ const OrderCancelled = async (req, res) => {
 
 const orderReturn = async (req, res) => {
     try {
-        console.log("333333saaaaaaa333333")
 
         const orderId = req.query.id;
         const userId = req.session.user;
@@ -968,7 +958,6 @@ const orderReturn = async (req, res) => {
         const wallet = await Wallet.findOne({ userId: userId });
         const returnedOrder = await Orders.findById( orderId );
      
-        console.log("333333333333")
         const orderItems = returnedOrder.product;
 
         for (const item of orderItems) {
