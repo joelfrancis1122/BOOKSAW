@@ -131,12 +131,12 @@ const forgotpassword = async(req,res)=>{
         const email = req.body.email;
   
         req.session.forgotemail = email
-
+        
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
-                user: "joelfrancis2005@gmail.com",
-                pass: "pxid psxq tcmm nwro"
+                user: process.env.EMAIL,
+                pass: process.env.PASS
             }
         });
              
@@ -416,8 +416,8 @@ const getOtp = async (req, res) => {
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
-                user: 'joelfrancis422@gmail.com',
-                pass: 'apqo dnri yzpa gvcg'
+               user: process.env.EMAIL,
+                pass: process.env.PASS
             }
         });
                           //otp_generation//
@@ -425,7 +425,7 @@ const getOtp = async (req, res) => {
         req.session.otp = randomotp
         const { email, name } = req.session.data
         const mailOptions = {
-            from: 'joelfrancis422@gmail.com',
+            from: process.env.EMAIL,
             to: email,
             subject: `Hello ${name}`,
             text: `Your verification OTP is ${randomotp}`
