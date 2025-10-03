@@ -8,9 +8,6 @@ const cron = require('node-cron');
 const dashboardLoad = async (req, res) => {
     try {
         const orders = await Orders.find();
-
-      
-
         const categories = await Category.find();
         const products = await Product.find();
         const orderCountsByMonth = Array.from({ length: 12 }, () => 0);
