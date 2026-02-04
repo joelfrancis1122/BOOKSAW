@@ -1,0 +1,308 @@
+<!-- ✅ jQuery + Toastr -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<style>
+    
+  /* 🧠 Dropdown container */
+  .user-dropdown {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .user-dropdown a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 12px;
+    display: inline-block;
+    transition: 0.3s ease;
+  }
+
+  .user-dropdown a:hover {
+    color: #007bff;
+  }
+
+  /* 🧩 Dropdown toggle style */
+  .user-dropdown .dropdown-toggle {
+    cursor: pointer;
+  }
+
+  /* 📦 Dropdown menu */
+  .user-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* ✅ ensures it sits below */
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    min-width: 150px;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .user-dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    transition: background 0.2s ease;
+  }
+
+  .user-dropdown-menu a:hover {
+    background: #f6f6f6;
+  }
+
+  .user-dropdown-menu .text-danger {
+    color: #dc3545;
+  }
+
+  /* 👆 Show dropdown on hover */
+  .user-dropdown:hover .user-dropdown-menu {
+    display: flex;
+  }
+
+  /* 📱 Responsive tweak */
+  @media (max-width: 768px) {
+    .user-dropdown {
+      width: 100%;
+      text-align: center;
+    }
+
+    .user-dropdown-menu {
+      position: static;
+      box-shadow: none;
+      border: none;
+      display: flex;
+    }
+
+    .user-dropdown-menu a {
+      border-top: 1px solid #eee;
+    }
+ 
+ }
+</style>
+
+<header class="header-area header-style-1 header-height-2">
+    <div class="header-top header-top-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info">
+                        <ul>
+                            <li><i class="fi-rs-smartphone"></i> <a href="#">(+01) - 2345 - 6789</a></li>
+                            <li><i class="fi-rs-marker"></i><a  href="page-contact.html">Our location</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-4">
+                    <div class="text-center">
+                        <div id="news-flash" class="d-inline-block">
+                            <ul>
+                                <li>Get Books up to 50% off <a href="/loadShop">View details</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>  
+                <div class="col-xl-3 col-lg-4">
+                    <div class="header-info header-info-right">
+                        <ul>
+                            <li>
+                                <a class="language-dropdown-active" href="#"> <i class="fi-rs-world"></i> English 
+                                </a>
+                            </li>
+                            <li class="dropdown nav-item user-dropdown">
+                                <% if(locals.name){ %>
+                                    <a class="dropdown-toggle" href="#" id="dropdownAccount" aria-expanded="false"><span><%=name%></span></a>
+                                    <div class="user-dropdown-menu">
+                                        <a href="/loadProfile">Profile</a>
+                                        <a href="/logout" class="text-danger">Logout</a>
+                                    </div>
+                                <% } else if(locals.name==null) { %>
+                                    <a href="/login"><span>Login</span></a>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="header-wrap">
+                <div class="logo logo-width-1">
+                    <a href="/home"><img src="/public/main-logo (1).png" alt="logo"></a>
+                </div>
+                <div class="header-right">
+                    <div class="search-style-2">
+
+                        <%if(locals.search){ %>
+
+                            <form action="/loadShop" class="premium-search-form">
+                            
+                                <input type="text" name="query"   value="<%=search%>" placeholder="Search for items...">
+                            </form>
+    
+
+                       <% }else { %>
+                            <form action="/loadShop" class="premium-search-form">
+                            
+                                <input type="text" name="query"    placeholder="Search for items...">
+                            </form>
+                       <% } %>
+                      
+                        
+                    </div>
+                    <div class="header-action-right">
+                        <div class="header-action-2">
+                            <%if(locals.wishlistLength){%>
+
+                            <div class="header-action-icon-2">
+                                <a href="getWishlist">
+                                    <img class="svgInject" alt="Evara" src="/public/assets/imgs/theme/icons/icon-heart.svg">
+                                    <span class="pro-count blue"><%= wishlistLength %></span>
+                                </a>
+                            </div>
+                            <%}else{%>
+                                <div class="header-action-icon-2">
+                                    <a href="getWishlist">
+                                        <img class="svgInject" alt="Evara" src="/public/assets/imgs/theme/icons/icon-heart.svg">
+                                        <span class="pro-count blue">0</span>
+                                    </a>
+                                </div>
+                                <%}%>
+                            <%if(locals.cartLength){ %>
+                            <div class="header-action-icon-2">
+                                <div class="header-action-icon-2">
+                                    <a class="mini-cart-icon" onclick="checkCartAuth(event)">
+                                        <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-cart.svg">
+                                        <span id="cart-count" class="pro-count blue"><%= cartLength %></span>
+                                    </a>
+                                </div>
+                                <% }else { %>
+                                    <div class="header-action-icon-2">
+                                        <div class="header-action-icon-2">
+                                            <a class="mini-cart-icon" onclick="checkCartAuth(event)">
+                                                <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-cart.svg">
+                                                <span class="pro-count blue">0</span>
+                                            </a>
+                                        </div>
+                                <% } %>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom header-bottom-bg-color sticky-bar">
+        <div class="container">
+            <div class="header-wrap header-space-between position-relative">
+                <div class="logo logo-width-1 d-block d-lg-none">
+                    <a href="/"><img src="/public/main-logo (1).png" alt="logo"></a>
+                </div>
+                <div class="header-nav d-none d-lg-flex">
+                    
+                    <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                        <nav>
+                            <ul>
+                                <li><a class="active" href="/">Home</i></a>
+                                   
+                                </li>
+                                <li>
+                                    <a href="/loadProfile">Profile</a>
+                                </li>
+                                <li><a href="/loadShop">Shop</i></a>
+                          
+                                </li>
+                                <!-- <li class="position-static"><a href="#">Mega menu</i></a> -->
+                                    
+                                </li>
+                                <!-- <li><a href="blog-category-grid.html">Blog</i></a> -->
+                                  
+                                </li>
+                                <!-- <li><a href="#">Pages</i></a> -->
+                                   
+                                </li>
+                                <li>
+                                    <!-- <a href="/getContact">Contact</a> -->
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="hotline d-none d-lg-block">
+                    <p><i class="fi-rs-headset"></i><span>Hotline</span> 1900 - 888 </p>
+                </div>
+                <p class="mobile-promotion">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</p>
+                <div class="header-action-right d-block d-lg-none">
+                    <div class="header-action-2">
+                        <div class="header-action-icon-2">
+                            <a href="/getWishlist">
+                                <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-heart.svg">
+                                <span class="pro-count white"><%= locals.wishlistLength || 0 %></span>
+                            </a>
+                        </div>
+                        <div class="header-action-icon-2">
+                            <a class="mini-cart-icon" onclick="checkCartAuth(event)">
+                                <img alt="Evara" src="/public/assets/imgs/theme/icons/icon-cart.svg">
+                                <span id="cart-count-mobile" class="pro-count white"><%= locals.cartLength || 0 %></span>
+                            </a>
+                            
+                        </div>
+                        <div class="header-action-icon-2 d-block d-lg-none">
+                            <div class="burger-icon burger-icon-white">
+                                <span class="burger-icon-top"></span>
+                                <span class="burger-icon-mid"></span>
+                                <span class="burger-icon-bottom"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ✅ JS Script -->
+<script>
+  async function checkCartAuth(event) {
+    event.preventDefault();
+    try {
+      const res = await fetch("/cart", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.status === 401) {
+        const data = await res.json();
+        toastr.error(data.message || "Please login to access your cart!");
+      } else if (res.ok) {
+        window.location.href = "/cart";
+      } else {
+        toastr.warning("Something went wrong. Try again later.");
+      }
+    } catch (err) {
+      console.error(err);
+      toastr.error("Network error! Check your connection.");
+    }
+  }
+
+  // 💅 Toastr Setup
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    positionClass: "toast-top-right",
+    timeOut: "3000",
+  };
+</script>

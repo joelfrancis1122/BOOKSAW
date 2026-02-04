@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>BOOK-SAW</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png" />
+  <link href="/public/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+  
+  <style>
+    #example {
+      width: 1200px;
+      height: auto;
+    }
+
+    .price-cell {
+      font-size: 16px;
+      position: relative;
+    }
+
+    .price-symbol {
+      font-size: 1.2em;
+    }
+
+    .big-number {
+      font-size: 1.2em;
+    }
+
+    .decimal {
+      font-size: 0.8em;
+    }
+
+    .small-number {
+      font-size: 0.8em;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="screen-overlay"></div>
+  <%-include('../partials/adminAside')-%>
+    <main class="main-wrap">
+      <%-include('../partials/adminHeader')-%>
+        <section class="content-main">
+          <div class="content-header">
+            <div>
+              <h2 class="content-title card-title">Products List</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div>
+              <a href="/admin/loadaddproduct" class="btn btn-primary btn-sm rounded">Create new</a>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <% if(locals.product) { %>
+                <div class="table-responsive">
+                  <div class="d-flex justify-content-center">
+                    <table id="example" class="display" style="width:1100px">
+                      <thead style="background-color:#f8f9fa; color: black">
+                        <tr>
+                          <th>Book Image</th>
+                          <th>Book Name</th>
+                          <th>Book Categories</th>
+                          <th>Stock</th>
+                          <th>Price</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(let i=0 ; i < product.length ; i++) { %>
+                          <tr class="align-middle" data-product-id="<%=product[i]._id%>">
+                            <td class="align-middle">
+                              <a class="itemside" href="#">
+                                <div class="left">
+                                  <img src="/public/uploads/<%=product[i].Images[0]%>" width="100px" alt="Please add a Image" />
+                                </div>
+                              </a>
+                            </td>
+                            <td class="align-middle">
+                              <h6 class="mb-0"><%=product[i].Bookname%></h6>
+                            </td>
+                            <td class="align-middle">
+                              <% if (product[i].Categories && product[i].Categories.categoryName) { %>
+                                <%= product[i].Categories.categoryName %>
+                              <% }%>
+                            </td>
+                            <td class="align-middle">
+                              <%=product[i].stock%> Books left
+                            </td>
+                            <td class="align-middle price-cell">
+                              <span class="price-symbol">$</span>
+                              <span class="big-number"><%= Math.floor(product[i].saleprice) %></span>
+                              <span class="decimal">.</span>
+                              <span class="small-number"><%= (product[i].saleprice % 1).toFixed(2).substring(2) %></span>
+                            </td>
+                            <td class="align-middle status-cell">
+                              <% if (product[i].is_Active) { %>
+                                <span class="badge rounded-pill alert-success">Active</span>
+                              <% } else { %>
+                                <span class="badge rounded-pill alert-danger">Blocked</span>
+                              <% } %>
+                            </td>
+                            <td class="align-middle action-cell">
+                              <a href="/admin/loadeditProduct?id=<%=product[i]._id%>" class="btn btn-sm font-sm rounded btn-brand">
+                                <i class="material-icons md-edit"></i> Edit
+                              </a>
+                              <% if (product[i].is_Active) { %>
+                                <a href="#" onclick="confirmBlock('<%= product[i]._id %>')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: rgb(255, 0, 0); transition: background-color 0.3s;">
+                                  <i class="material-icons md-delete_forever"></i> Block
+                                </a>
+                              <% } else { %>
+                                <a href="#" onclick="confirmUnblock('<%= product[i]._id %>')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: #088178; transition: background-color 0.3s;">
+                                  <i class="material-icons md-delete_forever"></i> Unblock
+                                </a>
+                              <% } %>
+                            </td>
+                          </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </section>
+        <footer class="main-footer font-xs">
+          <div class="row pb-30 pt-15">
+            <div class="col-sm-6">
+              <script>document.write(new Date().getFullYear());</script>
+              ©,BOOK-SAW
+            </div>
+            <div class="col-sm-6">
+              <div class="text-sm-end">All rights reserved</div>
+            </div>
+          </div>
+        </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      // Initialize DataTable
+      let table;
+      $(document).ready(function() {
+        table = new DataTable('#example', {
+          order: false
+        });
+      });
+
+      // Block product function with fetch
+      function confirmBlock(productId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You will be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#00d9ff',
+          cancelButtonColor: '#888',
+          confirmButtonText: 'Yes, block it!',
+          cancelButtonText: 'No, keep it',
+          background: 'rgba(30, 30, 30, 0.7)',
+          color: '#fff',
+          iconColor: '#f27474',
+          backdrop: `rgba(0,0,0,0.6)`,
+          width: '900px', 
+          padding: '2rem', 
+          heightAuto: false, 
+          height: '400px', 
+          customClass: {
+            popup: 'custom-swal-popup premium-modal',
+            loader: 'custom-swal-loader',
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Use fetch instead of page redirect
+            fetch(`/admin/ToggleblockProduct?id=${productId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                // Update the UI without refreshing
+                updateProductStatus(productId, false);
+                
+                Swal.fire({
+                  title: 'Blocked!',
+                  text: 'Product has been blocked.',
+                  icon: 'success',
+                  confirmButtonColor: '#088178',
+                  background: 'rgba(30, 30, 30, 0.7)',
+                  color: '#fff'
+                });
+              } else {
+                throw new Error('Failed to block product');
+              }
+            })
+            .catch(error => {
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to block product. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#d33'
+              });
+              console.error('Error:', error);
+            });
+          }
+        });
+      }
+
+      // Unblock product function with fetch
+      function confirmUnblock(productId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to unblock this product?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#00d9ff',
+          cancelButtonColor: '#888',
+          confirmButtonText: 'Yes, Unblock it!',
+          cancelButtonText: 'No, keep it',
+          background: 'rgba(30, 30, 30, 0.7)',
+          color: '#fff',
+          iconColor: '#f27474',
+          backdrop: `rgba(0,0,0,0.6)`,
+          width: '900px', 
+          padding: '2rem', 
+          heightAuto: false, 
+          height: '400px', 
+          customClass: {
+            popup: 'custom-swal-popup premium-modal',
+            loader: 'custom-swal-loader',
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Use fetch instead of page redirect
+            fetch(`/admin/ToggleblockProduct?id=${productId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                // Update the UI without refreshing
+                updateProductStatus(productId, true);
+                
+                Swal.fire({
+                  title: 'Unblocked!',
+                  text: 'Product has been unblocked.',
+                  icon: 'success',
+                  confirmButtonColor: '#088178',
+                  background: 'rgba(30, 30, 30, 0.7)',
+                  color: '#fff'
+                });
+              } else {
+                throw new Error('Failed to unblock product');
+              }
+            })
+            .catch(error => {
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to unblock product. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#d33'
+              });
+              console.error('Error:', error);
+            });
+          }
+        });
+      }
+
+      // Update product status in the UI
+      function updateProductStatus(productId, isActive) {
+        const row = $(`tr[data-product-id="${productId}"]`);
+        const statusCell = row.find('.status-cell');
+        const actionCell = row.find('.action-cell');
+
+        if (isActive) {
+          // Update status badge
+          statusCell.html('<span class="badge rounded-pill alert-success">Active</span>');
+          
+          // Update action button
+          actionCell.find('.toggle-btn').remove();
+          actionCell.append(`
+            <a href="#" onclick="confirmBlock('${productId}')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: rgb(255, 0, 0); transition: background-color 0.3s;">
+              <i class="material-icons md-delete_forever"></i> Block
+            </a>
+          `);
+        } else {
+          // Update status badge
+          statusCell.html('<span class="badge rounded-pill alert-danger">Blocked</span>');
+          
+          // Update action button
+          actionCell.find('.toggle-btn').remove();
+          actionCell.append(`
+            <a href="#" onclick="confirmUnblock('${productId}')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: #088178; transition: background-color 0.3s;">
+              <i class="material-icons md-delete_forever"></i> Unblock
+            </a>
+          `);
+        }
+      }
+    </script>
+
+    <script src="/public/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/public/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="/public/admin-assets/js/main.js" type="text/javascript"></script>
+</body>
+</html>

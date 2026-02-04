@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>BOOK-SAW</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png" />
+  <link href="/public/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+  
+  <style>
+    #example {
+      width: 1200px;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="screen-overlay"></div>
+  <%-include('../partials/adminAside')-%>
+    <main class="main-wrap">
+      <%-include('../partials/adminHeader')-%>
+        <section class="content-main">
+          <div class="content-header">
+            <div>
+              <h2 class="content-title card-title">Users List</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <% if(locals.users) { %>
+                <div class="table-responsive">
+                  <div class="d-flex justify-content-center">
+                    <table class="table text-center" id="example">
+                      <thead style="background-color: #f8f9fa; color: black">
+                        <tr>
+                          <th>No</th>
+                          <th>User Name</th>
+                          <th>Email</th>
+                          <th>Mobile no</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(let i=0 ; i < users.length ; i++) { %>
+                          <tr class="align-middle" data-user-id="<%=users[i]._id%>">
+                            <td class="align-middle">
+                              <h6 class="mb-0"><%=i+1%></h6>
+                            </td>
+                            <td class="align-middle">
+                              <h6 class="mb-0"><%=users[i].name%></h6>
+                            </td>
+                            <td class="align-middle">
+                              <%=users[i].email%>
+                            </td>
+                            <td class="align-middle">
+                              <%=users[i].mobile%>
+                            </td>
+                            <td class="align-middle status-cell">
+                              <% if (users[i].is_active) { %>
+                                <span class="badge rounded-pill alert-success">Active</span>
+                              <% } else { %>
+                                <span class="badge rounded-pill alert-danger">Blocked</span>
+                              <% } %>
+                            </td>
+                            <td class="align-middle action-cell">
+                              <% if (users[i].is_active) { %>
+                                <a href="#" onclick="confirmBlock('<%= users[i]._id %>')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: rgb(255, 0, 0); transition: background-color 0.3s;">
+                                  <i class="material-icons md-delete_forever"></i> Block
+                                </a>
+                              <% } else { %>
+                                <a href="#" onclick="confirmUnblock('<%= users[i]._id %>')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: #088178; transition: background-color 0.3s;">
+                                  <i class="material-icons md-delete_forever"></i> Unblock
+                                </a>
+                              <% } %>
+                            </td>
+                          </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </section>
+        <footer class="main-footer font-xs">
+          <div class="row pb-30 pt-15">
+            <div class="col-sm-6">
+              <script>document.write(new Date().getFullYear());</script>
+              ©,BOOK-SAW
+            </div>
+            <div class="col-sm-6">
+              <div class="text-sm-end">All rights reserved</div>
+            </div>
+          </div>
+        </footer>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      // Initialize DataTable
+      let table;
+      $(document).ready(function() {
+        table = new DataTable('#example', {
+          order: false
+        });
+      });
+
+      // Block user function with fetch
+      function confirmBlock(userId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You will be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#00d9ff',
+          cancelButtonColor: '#888',
+          confirmButtonText: 'Yes, block it!',
+          cancelButtonText: 'No, keep it',
+          background: 'rgba(30, 30, 30, 0.7)',
+          color: '#fff',
+          iconColor: '#f27474',
+          backdrop: `rgba(0,0,0,0.6)`,
+          width: '900px', 
+          padding: '2rem', 
+          heightAuto: false, 
+          height: '400px', 
+          customClass: {
+            popup: 'custom-swal-popup premium-modal',
+            loader: 'custom-swal-loader',
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Use fetch instead of page redirect
+            fetch(`/admin/ToggleblockUser?id=${userId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                // Update the UI without refreshing
+                updateUserStatus(userId, false);
+                
+                Swal.fire({
+                  title: 'Blocked!',
+                  text: 'User has been blocked.',
+                  icon: 'success',
+                  confirmButtonColor: '#088178',
+                  background: 'rgba(30, 30, 30, 0.7)',
+                  color: '#fff',
+                  timer: 1500,
+                  showConfirmButton: false
+                });
+              } else {
+                throw new Error('Failed to block user');
+              }
+            })
+            .catch(error => {
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to block user. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#d33'
+              });
+              console.error('Error:', error);
+            });
+          }
+        });
+      }
+
+      // Unblock user function with fetch
+      function confirmUnblock(userId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to unblock this user?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#00d9ff',
+          cancelButtonColor: '#888',
+          confirmButtonText: 'Yes, Unblock it!',
+          cancelButtonText: 'No, keep it',
+          background: 'rgba(30, 30, 30, 0.7)',
+          color: '#fff',
+          iconColor: '#f27474',
+          backdrop: `rgba(0,0,0,0.6)`,
+          width: '900px', 
+          padding: '2rem', 
+          heightAuto: false, 
+          height: '400px', 
+          customClass: {
+            popup: 'custom-swal-popup premium-modal',
+            loader: 'custom-swal-loader',
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Use fetch instead of page redirect
+            fetch(`/admin/ToggleblockUser?id=${userId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                // Update the UI without refreshing
+                updateUserStatus(userId, true);
+                
+                Swal.fire({
+                  title: 'Unblocked!',
+                  text: 'User has been unblocked.',
+                  icon: 'success',
+                  confirmButtonColor: '#088178',
+                  background: 'rgba(30, 30, 30, 0.7)',
+                  color: '#fff',
+                  timer: 1500,
+                  showConfirmButton: false
+                });
+              } else {
+                throw new Error('Failed to unblock user');
+              }
+            })
+            .catch(error => {
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to unblock user. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#d33'
+              });
+              console.error('Error:', error);
+            });
+          }
+        });
+      }
+
+      // Update user status in the UI
+      function updateUserStatus(userId, isActive) {
+        const row = $(`tr[data-user-id="${userId}"]`);
+        const statusCell = row.find('.status-cell');
+        const actionCell = row.find('.action-cell');
+
+        if (isActive) {
+          // Update status badge
+          statusCell.html('<span class="badge rounded-pill alert-success">Active</span>');
+          
+          // Update action button
+          actionCell.find('.toggle-btn').remove();
+          actionCell.append(`
+            <a href="#" onclick="confirmBlock('${userId}')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: rgb(255, 0, 0); transition: background-color 0.3s;">
+              <i class="material-icons md-delete_forever"></i> Block
+            </a>
+          `);
+        } else {
+          // Update status badge
+          statusCell.html('<span class="badge rounded-pill alert-danger">Blocked</span>');
+          
+          // Update action button
+          actionCell.find('.toggle-btn').remove();
+          actionCell.append(`
+            <a href="#" onclick="confirmUnblock('${userId}')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: #088178; transition: background-color 0.3s;">
+              <i class="material-icons md-delete_forever"></i> Unblock
+            </a>
+          `);
+        }
+      }
+    </script>
+
+    <script src="/public/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/public/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="/public/admin-assets/js/main.js" type="text/javascript"></script>
+</body>
+</html>

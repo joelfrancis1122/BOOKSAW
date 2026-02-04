@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BOOKSAW Invoice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="/public/spellbook.png" />
+
+  <style>
+    body {
+      background: #f4f6f8;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* ACTION BUTTONS */
+    .invoice-actions {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .invoice-actions button {
+      padding: 10px 18px;
+      border-radius: 6px;
+      border: none;
+      background: #2563eb;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 0 6px;
+    }
+
+    /* INVOICE */
+    #invoice {
+      background: #ffffff;
+      max-width: 800px;
+      margin: auto;
+      padding: 40px;
+      color: #000;
+    }
+
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .invoice-header img {
+      width: 120px;
+    }
+
+    .invoice-title {
+      text-align: right;
+    }
+
+    .invoice-title h2 {
+      margin: 0;
+    }
+
+    .invoice-info p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table thead {
+      background: #f1f5f9;
+    }
+
+    table th,
+    table td {
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
+
+    table td:last-child,
+    table th:last-child {
+      text-align: right;
+    }
+
+    /* CANCELLED ROW */
+    .cancelled {
+      text-decoration: line-through;
+      color: #9ca3af;
+    }
+
+    .cancelled td::after {
+      content: " (Cancelled)";
+      color: #ef4444;
+      font-weight: bold;
+    }
+
+    .total-section {
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .invoice-footer {
+      margin-top: 40px;
+      font-size: 13px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    /* PRINT RULES */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #invoice,
+      #invoice * {
+        visibility: visible;
+      }
+
+      #invoice {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      .invoice-actions {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ACTION BUTTONS -->
+  <div class="invoice-actions">
+    <button onclick="window.print()">Print</button>
+    <button id="downloadPdf">Download PDF</button>
+  </div>
+
+  <!-- INVOICE -->
+  <div id="invoice">
+
+    <div class="invoice-header">
+      <img src="/public/main-logo (1).png" alt="BOOKSAW Logo" />
+
+      <div class="invoice-title">
+        <h2>INVOICE</h2>
+        <p>Order ID: <%= orders.orderId %></p>
+        <p>Date: <%= orders.orderDate.toLocaleString() %></p>
+      </div>
+    </div>
+
+    <div class="invoice-info">
+      <p><strong>Billed To:</strong></p>
+      <p><%= address.name %></p>
+      <p>Phone: <%= address.mobile %></p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Book Name</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% let grandTotal = 0; %>
+
+        <% orders.product.forEach(item => { %>
+          <tr class="<%= item.productStatus === 'Cancelled' ? 'cancelled' : '' %>">
+            <td><%= item.productId.Bookname %></td>
+            <td>$<%= item.price %></td>
+            <td><%= item.quantity %></td>
+            <td>
+              <% if(item.productStatus === 'Cancelled') { %>
+                $0.00
+              <% } else { %>
+                $<%= (item.price * item.quantity).toFixed(2) %>
+              <% } %>
+            </td>
+          </tr>
+
+          <% if(item.productStatus !== 'Cancelled') { %>
+            <% grandTotal += item.price * item.quantity; %>
+          <% } %>
+        <% }) %>
+
+      </tbody>
+    </table>
+
+    <div class="total-section">
+      <h3>Total: $<%= orderData.totalAmount || grandTotal.toFixed(2) %></h3>
+    </div>
+
+    <div class="invoice-footer">
+      Thank you for shopping with BOOKSAW ❤️
+    </div>
+
+  </div>
+
+  <!-- PDF SCRIPT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    document.getElementById("downloadPdf").addEventListener("click", () => {
+      html2pdf()
+        .set({
+          margin: 10,
+          filename: "BOOKSAW-Invoice.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        })
+        .from(document.getElementById("invoice"))
+        .save();
+    });
+  </script>
+
+</body>
+</html>
+5

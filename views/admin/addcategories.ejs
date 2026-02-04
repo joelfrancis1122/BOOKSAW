@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>BOOK-SAW</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="/public/spellbook.png"
+    />
+    <link
+      href="/public/admin-assets/css/main.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <style>
+      .premium-modal {
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        background: linear-gradient(
+          to right,
+          rgba(30, 30, 30, 0.7) 80%,
+          rgba(30, 30, 30, 0.4)
+        );
+        animation: fadeInModal 0.5s ease-in-out;
+      }
+
+      @keyframes fadeInModal {
+        0% {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      #example {
+        width: 1000px;
+        height: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="screen-overlay"></div>
+    <%- include('../partials/adminAside') %>
+
+    <main class="main-wrap">
+      <%- include('../partials/adminHeader') %>
+
+      <section class="content-main">
+        <div class="content-header">
+          <div>
+            <h2 class="content-title card-title">Categories</h2>
+            <p>Add, edit or delete a category</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <!-- FORM START -->
+              <div class="col-md-3">
+                <form method="post" action="/admin/addCategories">
+                  <div class="mb-4">
+                    <label for="product_name" class="form-label"
+                      >Category Name</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Type here"
+                      name="categoryName"
+                      class="form-control"
+                      id="product_name"
+                      pattern="[A-Za-z]+"
+                      title="Please enter only alphabets"
+                      maxlength="15"
+                    />
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="desc" class="form-label">Description</label>
+                    <textarea
+                      name="Description"
+                      id="desc"
+                      placeholder="Type here"
+                      maxlength="30"
+                      class="form-control"
+                    ></textarea>
+                  </div>
+
+                  <div class="d-grid">
+                    <button class="btn btn-primary" type="submit">
+                      Create category
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <!-- FORM END -->
+
+              <!-- TABLE START -->
+              <div class="col-md-9">
+                <div class="table-responsive">
+                  <% if (locals.categories) { %>
+                  <table class="table table-hover" id="example">
+                    <thead>
+                      <tr>
+                        <th class="text-center"></th>
+                        <th>No</th>
+                        <th>Category name</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for (let i = 0; i < categories.length; i++) { %>
+                      <tr data-category-id="<%= categories[i]._id %>">
+                        <td class="text-center"></td>
+                        <td><%= i + 1 %></td>
+                        <td><b><%= categories[i].categoryName %></b></td>
+                        <td><b><%= categories[i].Description %></b></td>
+                        <td class="status-cell">
+                          <% if (categories[i].is_Active) { %>
+                          <span class="badge rounded-pill alert-success"
+                            >Active</span
+                          >
+                          <% } else { %>
+                          <span class="badge rounded-pill alert-danger"
+                            >Blocked</span
+                          >
+                          <% } %>
+                        </td>
+                        <td class="action-cell">
+                          <a
+                            href="/admin/loadeditCategory?id=<%= categories[i]._id %>"
+                            class="btn btn-sm font-sm btn-light rounded"
+                            style="
+                              background-color: #007bff;
+                              color: #fff;
+                              margin-left: 5px;
+                            "
+                          >
+                            <i class="material-icons md-edit"></i>Edit
+                          </a>
+                          <% if (categories[i].is_Active) { %>
+                          <a
+                            href="#"
+                            onclick="confirmBlock('<%= categories[i]._id %>')"
+                            class="btn btn-sm font-sm btn-light rounded toggle-btn"
+                            style="
+                              background-color: rgb(255, 0, 0);
+                              transition: background-color 0.3s;
+                            "
+                          >
+                            <i class="material-icons md-delete_forever"></i
+                            ><b> Block</b>
+                          </a>
+                          <% } else { %>
+                          <a
+                            href="#"
+                            onclick="confirmUnBlock('<%= categories[i]._id %>')"
+                            class="btn btn-sm font-sm btn-light rounded toggle-btn"
+                            style="
+                              background-color: #088178;
+                              transition: background-color 0.3s;
+                            "
+                          >
+                            <i class="material-icons md-delete_forever"></i
+                            >Unblock
+                          </a>
+                          <% } %>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                  <% } %>
+                </div>
+              </div>
+              <!-- TABLE END -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="main-footer font-xs">
+        <div class="row pb-30 pt-15">
+          <div class="col-sm-6">
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            © BOOK-SAW
+          </div>
+          <div class="col-sm-6 text-sm-end">All rights reserved</div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- JS LIBRARIES -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Vendor Scripts -->
+    <script src="/public/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/public/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script
+      src="/public/admin-assets/js/main.js"
+      type="text/javascript"
+    ></script>
+
+    <!-- SweetAlert Functions with Fetch -->
+    <script>
+      // Initialize DataTable
+      let table;
+      $(document).ready(function() {
+        table = new DataTable('#example', {
+          order: false
+        });
+      });
+
+      // Block category function with fetch
+      function confirmBlock(categoryId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You are about to block this category!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#00d9ff",
+          cancelButtonColor: "#888",
+          confirmButtonText: "Yes, block it!",
+          cancelButtonText: "No, keep it",
+          background: "rgba(30, 30, 30, 0.7)",
+          color: "#fff",
+          iconColor: "#f27474",
+          backdrop: "rgba(0,0,0,0.6)",
+          width: "900px",
+          padding: "2rem",
+          customClass: { popup: "premium-modal" },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Use fetch instead of page redirect
+            fetch(`/admin/ToggleblockCategories?catid=${categoryId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                // Update the UI without refreshing
+                updateCategoryStatus(categoryId, false);
+                
+                Swal.fire({
+                  title: 'Blocked!',
+                  text: 'Category has been blocked.',
+                  icon: 'success',
+                  confirmButtonColor: '#088178',
+                  background: 'rgba(30, 30, 30, 0.7)',
+                  color: '#fff',
+                  timer: 1500,
+                  showConfirmButton: false,
+                  customClass: { popup: "premium-modal" }
+                });
+              } else {
+                throw new Error('Failed to block category');
+              }
+            })
+            .catch(error => {
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to block category. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#d33',
+                customClass: { popup: "premium-modal" }
+              });
+              console.error('Error:', error);
+            });
+          }
+        });
+      }
+
+      // Unblock category function with fetch
+      function confirmUnBlock(categoryId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You are about to Unblock this category!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#00d9ff",
+          cancelButtonColor: "#888",
+          confirmButtonText: "Yes, Unblock it!",
+          cancelButtonText: "No, keep it blocked",
+          background: "rgba(30, 30, 30, 0.7)",
+          color: "#fff",
+          iconColor: "#f27474",
+          backdrop: "rgba(0,0,0,0.6)",
+          width: "900px",
+          padding: "2rem",
+          customClass: { popup: "premium-modal" },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Use fetch instead of page redirect
+            fetch(`/admin/ToggleblockCategories?catid=${categoryId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                // Update the UI without refreshing
+                updateCategoryStatus(categoryId, true);
+                
+                Swal.fire({
+                  title: 'Unblocked!',
+                  text: 'Category has been unblocked.',
+                  icon: 'success',
+                  confirmButtonColor: '#088178',
+                  background: 'rgba(30, 30, 30, 0.7)',
+                  color: '#fff',
+                  timer: 1500,
+                  showConfirmButton: false,
+                  customClass: { popup: "premium-modal" }
+                });
+              } else {
+                throw new Error('Failed to unblock category');
+              }
+            })
+            .catch(error => {
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to unblock category. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#d33',
+                customClass: { popup: "premium-modal" }
+              });
+              console.error('Error:', error);
+            });
+          }
+        });
+      }
+
+      // Update category status in the UI
+      function updateCategoryStatus(categoryId, isActive) {
+        const row = $(`tr[data-category-id="${categoryId}"]`);
+        const statusCell = row.find('.status-cell');
+        const actionCell = row.find('.action-cell');
+
+        if (isActive) {
+          // Update status badge
+          statusCell.html('<span class="badge rounded-pill alert-success">Active</span>');
+          
+          // Update action button - keep the Edit button and add Block button
+          actionCell.find('.toggle-btn').remove();
+          actionCell.append(`
+            <a href="#" onclick="confirmBlock('${categoryId}')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: rgb(255, 0, 0); transition: background-color 0.3s;">
+              <i class="material-icons md-delete_forever"></i><b> Block</b>
+            </a>
+          `);
+        } else {
+          // Update status badge
+          statusCell.html('<span class="badge rounded-pill alert-danger">Blocked</span>');
+          
+          // Update action button - keep the Edit button and add Unblock button
+          actionCell.find('.toggle-btn').remove();
+          actionCell.append(`
+            <a href="#" onclick="confirmUnBlock('${categoryId}')" class="btn btn-sm font-sm btn-light rounded toggle-btn" style="background-color: #088178; transition: background-color 0.3s;">
+              <i class="material-icons md-delete_forever"></i>Unblock
+            </a>
+          `);
+        }
+      }
+    </script>
+
+    <!-- Client-side Validation -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector(
+          "form[action='/admin/addCategories']"
+        );
+        const categoryNameInput = form.querySelector(
+          "input[name='categoryName']"
+        );
+
+        form.addEventListener("submit", function (event) {
+          const inputValue = categoryNameInput.value.trim();
+          if (inputValue === "") {
+            event.preventDefault();
+            toastr.warning("Category name cannot be empty.");
+          } else if (!inputValue.replace(/\s/g, "").length) {
+            event.preventDefault();
+            toastr.warning("Category name cannot contain only spaces.");
+          }
+        });
+      });
+    </script>
+
+    <% if (locals.categoriesExists) { %>
+    <script>
+      toastr.error("Category already exists");
+    </script>
+    <% } if (locals.categoriesExistss) { %>
+    <script>
+      Swal.fire({
+        icon: "success",
+        title: "Category created!",
+        color: "#fff",
+        iconColor: "#4caf50",
+        backdrop: "rgba(0,0,0,0.8)",
+        width: "600px",
+        padding: "2rem",
+        customClass: { popup: "premium-modal" },
+      }).then(() => {
+        window.location.href = "/admin/loadCategories";
+      });
+    </script>
+    <% } %>
+  </body>
+</html>

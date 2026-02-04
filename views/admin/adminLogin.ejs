@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | BOOKSAW</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center;
+           background: url('/public/2148827214.jpg') center/cover no-repeat; position: relative; }
+    body::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                   background: rgba(0,0,0,0.55); z-index: 0; }
+    .container { position: relative; z-index: 2; width: 100%; max-width: 430px;
+                 background: rgba(255, 255, 255, 0.95); border-radius: 10px; padding: 2rem;
+                 box-shadow: 0 8px 25px rgba(0,0,0,0.35); backdrop-filter: blur(6px); }
+    header { text-align: center; font-size: 2rem; font-weight: 600; color: #111; margin-bottom: 1.5rem; }
+    input { width: 100%; padding: 14px; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 6px;
+            font-size: 15px; transition: border-color 0.3s; }
+    input:focus { border-color: #088178; outline: none; }
+    .button { width: 100%; padding: 14px; background: #000; color: #fff; font-size: 1rem;
+              font-weight: 500; border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+    .button:hover { background: #222; transform: scale(1.02); }
+    .forgot { text-align: right; display: block; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .forgot a { color: #088178; text-decoration: none; }
+    .forgot a:hover { text-decoration: underline; }
+    .alert-msg { text-align: center; margin-top: 0.5rem; font-size: 0.9rem; }
+    @media (max-width: 600px) { .container { margin: 1rem; padding: 1.5rem; } header { font-size: 1.6rem; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>Admin Login</header>
+    <form id="adminLoginForm">
+  <input type="email" name="email" placeholder="Admin Email" required>
+  <input type="password" name="password" placeholder="Password" required>
+  <div class="forgot"><a href="/admin/forgotPass">Forgot password?</a></div>
+  <input type="submit" class="button" value="Login">
+</form>
+
+    <div class="alert-msg text-danger" id="errorMessage"><%= typeof errMessage !== 'undefined' ? errMessage : '' %></div>
+    <div class="alert-msg text-success" id="successMessage"><%= typeof successMessage !== 'undefined' ? successMessage : '' %></div>
+    <div class="alert-msg text-warning" id="bannedMessage"><%= typeof bannedMessage !== 'undefined' ? bannedMessage : '' %></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+const form = document.getElementById('adminLoginForm');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = form.email.value.trim();
+  const password = form.password.value.trim();
+
+  if (!email || !password) {
+    Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Fill all fields!', confirmButtonColor: '#000' });
+    return;
+  }
+
+  try {   
+    const response = await fetch('/admin/verifyLogin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful!',
+        text: 'Redirecting...',
+        timer: 1500,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = data.redirectUrl;
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: data.message || 'Invalid credentials',
+        confirmButtonColor: '#000'
+      });
+    }
+
+  } catch (err) {
+    Swal.fire({ icon: 'error', title: 'Network Error', text: 'Please try again.', confirmButtonColor: '#000' });
+  }
+});
+</script>
+
+
+
+</body>
+</html>

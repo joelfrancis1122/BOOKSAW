@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+
+<head>
+  <meta charset="utf-8" />
+  <title> BOOK-SAW</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="" />
+  <meta property="og:type" content="" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/public/spellbook.png" />
+  <!-- Template CSS -->
+  <link href="/public/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+
+<style>
+  .bg-primary-light {
+  background-color: #cce5ff; /* Light blue */
+}
+
+.bg-secondary-light {
+  background-color: #e2e3e5; /* Light gray */
+}
+
+.bg-danger-light {
+  background-color: #f8d7da; /* Light red */
+}
+
+.bg-success-light {
+  background-color: #d4edda; /* Light green */
+}
+#example {
+      width: 1200px;
+      height: auto;
+    }
+
+    #example {
+      width: 1200px;
+      height: auto;
+    }
+
+    .price-cell {
+      font-size: 16px;
+      position: relative;
+    }
+
+    .price-symbol {
+      font-size: 1.2em;
+    }
+
+    .big-number {
+      font-size: 1.2em;
+    }
+
+    .decimal {
+      font-size: 0.8em;
+    }
+
+    .small-number {
+      font-size: 0.8em;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+</style>
+</head>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<body>
+  <div class="screen-overlay"></div>
+  <%-include('../partials/adminAside')-%>
+    <main class="main-wrap">
+      <%-include('../partials/adminHeader')-%>
+        <section class="content-main">
+          <div class="content-header">
+            <div>
+              <h2 class="content-title card-title">Order List</h2>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="table-responsive">
+
+                <table id="example" class="display" style="width:1200px;height:600px" >
+                  <% if(orders && orders.length > 0) { %>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Total Amount</th>
+                            <th>Payment Method</th>
+                            <th>Date & Time</th>
+                            <th>Payment Status</th>
+                            <th>Order Status</th>
+                            <th>Change Status</th>
+                            <th class="text-end">Order Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let i = orders.length - 1; i >= 0; i--) { 
+                        const order = orders[i];
+                    %>
+            
+                            <tr id="order-row-<%= order._id %>">
+                                <td><%= order.orderId %></td>
+                                <td>$<%= order.totalAmount %></td>
+                                <td><%= order.paymentMethod %></td>
+                                <td><%= order.orderDate.toLocaleString() %></td>
+                                <td>
+                                    <span class="badge <%= order.paymentStatus === 'Received' ? 'bg-success-light' : 'bg-warning-light' %> text-dark">
+                                        <%= order.paymentStatus %>
+                                    </span>
+                                </td>
+                                <td id="order-status-<%= order._id %>">
+                                  <% if (order.paymentStatus !== 'Failed') { %>
+                                    <span class="badge <%= order.orderStatus === 'Shipped' ? 'bg-primary-light' : 
+                                                          (order.orderStatus === 'Returned' ? 'bg-secondary-light' : 
+                                                          (order.orderStatus === 'Cancelled' ? 'bg-danger-light' : 
+                                                          (order.orderStatus === 'Delivered' ? 'bg-success-light' : 'bg-warning-light'))) %> text-dark">
+                                        <%= order.orderStatus %>
+                                    </span>
+                                <% } %>
+                                </td>
+                                <td id="change-status-<%= order._id %>">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-icon dropdown-toggle" type="button"
+                                            id="deliveryStatusDropdown_<%= order._id %>" data-bs-toggle="dropdown" aria-expanded="false"
+                                            <% if (order.orderStatus === 'Delivered' || order.orderStatus === 'Returned' || order.orderStatus === 'Cancelled'|| order.paymentStatus === "Failed") { %>
+                                                disabled
+                                            <% } %>
+                                            <b>Status</b>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="deliveryStatusDropdown_<%= order._id %>">
+                                            <li><a class="dropdown-item status-change-link" href="#" data-order-id="<%= order._id %>" data-status="Order Placed" data-route="/admin/adminOrderpending">Order Placed</a></li>
+                                            <li><a class="dropdown-item status-change-link" href="#" data-order-id="<%= order._id %>" data-status="Shipped" data-route="/admin/adminOrderShipped">Shipped</a></li>
+                                            <li><a class="dropdown-item status-change-link" href="#" data-order-id="<%= order._id %>" data-status="Delivered" data-route="/admin/adminOrderDelivered">Delivered</a></li>
+                                            <li><a class="dropdown-item status-change-link" href="#" data-order-id="<%= order._id %>" data-status="Cancelled" data-route="/admin/adminOrderCancelled">Cancelled</a></li>
+                                            <li><a class="dropdown-item status-change-link" href="#" data-order-id="<%= order._id %>" data-status="Returned" data-route="/admin/adminOrderReturned">Returned</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <a href="/admin/loadOrderDetails?id=<%=order._id%>" class="btn btn-sm btn-outline-dark">Order Detail</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                <% } else { %>
+                    <h3 style="font-size: 28px; font-weight: bold; color: #000000; text-transform: uppercase; border-bottom: 2px solid #007bff; padding-bottom: 5px;">No orders found</h3>
+                <% } %>
+                </table>
+
+            </div>
+          </div>
+          </div>
+
+        </section>
+        <footer class="main-footer font-xs">
+          <div class="row pb-30 pt-15">
+            <div class="col-sm-6">
+              <script data-cfasync="false"
+                src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              ©,BOOK-SAW
+            </div>
+            <div class="col-sm-6">
+              <div class="text-sm-end">All rights reserved</div>
+            </div>
+          </div>
+        </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script src="/public/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/public/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/public/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="/public/admin-assets/js/main.js" type="text/javascript"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+    <script>
+      let dataTable;
+      $(document).ready(function() {
+        dataTable = new DataTable('#example', {
+          order: false
+        });
+      });
+    </script>
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Get all status change links
+        const statusChangeLinks = document.querySelectorAll('.status-change-link');
+        
+        statusChangeLinks.forEach(link => {
+          link.addEventListener('click', function (event) {
+            event.preventDefault();
+            
+            const orderId = this.getAttribute('data-order-id');
+            const newStatus = this.getAttribute('data-status');
+            const route = this.getAttribute('data-route');
+            
+            // Show confirmation dialog
+            Swal.fire({
+              title: 'Are you sure?',
+              text: `You are about to change this order status to "${newStatus}"`,
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#00d9ff',
+              cancelButtonColor: '#888',
+              confirmButtonText: 'Yes, change it!',
+              cancelButtonText: 'No, cancel',
+              background: 'rgba(30, 30, 30, 0.7)',
+              color: '#fff',
+              iconColor: '#f27474',
+              backdrop: `rgba(0,0,0,0.6) left top no-repeat`,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Show loading
+                Swal.fire({
+                  title: 'Processing...',
+                  text: 'Please wait',
+                  allowOutsideClick: false,
+                  showConfirmButton: false,
+                  willOpen: () => {
+                    Swal.showLoading();
+                  }
+                });
+
+                // Make fetch request
+                fetch(`${route}?id=${orderId}`, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  }
+                })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response.json().catch(() => ({ success: true }));
+                })
+                .then(data => {
+                  // Update the UI
+                  updateOrderStatus(orderId, newStatus);
+                  
+                  // Show success message
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Updated!',
+                    text: `Order status changed to "${newStatus}" successfully.`,
+                    timer: 2000,
+                    showConfirmButton: false,
+                    background: 'rgba(30, 30, 30, 0.7)',
+                    color: '#fff',
+                  });
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Something went wrong. Please try again.',
+                    background: 'rgba(30, 30, 30, 0.7)',
+                    color: '#fff',
+                  });
+                });
+              }
+            });
+          });
+        });
+      });
+
+      // Function to update order status in the UI
+      function updateOrderStatus(orderId, newStatus) {
+        const statusCell = document.getElementById(`order-status-${orderId}`);
+        const changeStatusCell = document.getElementById(`change-status-${orderId}`);
+        
+        // Determine badge class based on status
+        let badgeClass = 'bg-warning-light';
+        if (newStatus === 'Shipped') {
+          badgeClass = 'bg-primary-light';
+        } else if (newStatus === 'Delivered') {
+          badgeClass = 'bg-success-light';
+        } else if (newStatus === 'Cancelled') {
+          badgeClass = 'bg-danger-light';
+        } else if (newStatus === 'Returned') {
+          badgeClass = 'bg-secondary-light';
+        }
+        
+        statusCell.innerHTML = `<span class="badge ${badgeClass} text-dark">${newStatus}</span>`;
+        
+        // Disable dropdown if status is terminal (Delivered, Returned, or Cancelled)
+        if (newStatus === 'Delivered' || newStatus === 'Returned' || newStatus === 'Cancelled') {
+          const dropdownButton = changeStatusCell.querySelector('button');
+          if (dropdownButton) {
+            dropdownButton.setAttribute('disabled', 'disabled');
+          }
+        }
+      }
+    </script>
+
+</body>
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:22 GMT -->
+
+</html>

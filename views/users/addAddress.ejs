@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Address</title>
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for additional styling */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin: 50px auto;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            border-bottom: none;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            background-color: #046963;
+            color: #fff;
+        }
+
+        .card-body {
+            padding: 40px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn-primary {
+            border-radius: 10px;
+        }
+    </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+</head>
+
+<body>
+    <div class="card border-primary">
+        <div class="card-header">
+            <h5 class="mb-0 text-center">Add Address</h5>
+        </div>
+        <div class="card-body">
+            <form id="addressForm" action="/addAddress1" method="post">
+                <div class="mb-3">
+                    <label for="inputAddress" class="form-label">Name</label>
+                    <input type="text" class="form-control form-control-lg" name="name" id="inputAddress" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputCity" class="form-label">Mobile</label>
+                    <input type="tel" pattern="[0-9]{10}" maxlength="10" class="form-control form-control-lg" name="mobile" id="inputCity" required>
+                    <small>Please enter a 10-digit mobile number.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="inputState" class="form-label">House Name</label>
+                    <input type="text" class="form-control form-control-lg" name="houseName" id="inputState" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputZip" class="form-label">City</label>
+                    <input type="text" class="form-control form-control-lg" name="city" id="inputZip" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputState" class="form-label">State</label>
+                    <input type="text" class="form-control form-control-lg" name="state" id="inputState" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputZip" class="form-label">Pincode</label>
+                    <input type="text" class="form-control form-control-lg" maxlength="6" name="pinCode" id="inputZip" required pattern="[0-9]{6}">
+                    <small>Please enter a 6-digit pin code.</small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="background-color: #046963;">Save Address</button>
+
+            </form>
+        </div>
+    </div>
+
+
+    
+    <script>
+        document.getElementById("addressForm").addEventListener("submit", function(event) {
+            // Prevent form submission
+            event.preventDefault();
+    
+            // Validate Name field to disallow spaces
+            const nameInput = document.getElementById("inputAddress");
+            if (/\s/.test(nameInput.value)) {
+                toastr.error("Name should not contain spaces.");
+                nameInput.focus();
+                return;
+            }
+    
+            // Validate State, City, and House Name fields to disallow numbers
+            const stateInput = document.getElementById("inputState");
+            const cityInput = document.getElementById("inputZip");
+            const houseNameInput = document.getElementById("inputZip");
+    
+            if (/\d/.test(stateInput.value) || /\d/.test(cityInput.value) || /\d/.test(houseNameInput.value)) {
+                toastr.error("State, City, and House Name should not contain numbers.");
+                stateInput.focus();
+                return;
+            }
+    
+            // If all validations pass, submit the form
+            this.submit();
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</body>
+
+</html>
+

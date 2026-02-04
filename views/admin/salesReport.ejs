@@ -1,0 +1,367 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BOOK-SAW</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/admin-assets/imgs/theme/favicon.svg">
+  <!-- Template CSS -->
+  <link href="/public/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+
+  <!-- Optional extra Bootstrap 5 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z0Jp0y0Tk5VuVgGVnCwojjP1Y0+IbJ3fbaDjzW"
+        crossorigin="anonymous">
+
+  <style>
+    /* PDF-specific styles */
+    @media print {
+      body {
+        background: white;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .screen-overlay,
+      .no-print,
+      .btn-light,
+      .border-bottom,
+      header,
+      form,
+      .pagination-container {  /* Hide pagination for PDF */
+        display: none !important;
+      }
+
+      .card {
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .card-body {
+        padding: 0 !important;
+      }
+
+      .table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      .table th,
+      .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      .table thead {
+        background-color: #f8f9fa;
+      }
+
+      .bg-light {
+        background: white !important;
+        border: 1px solid #ddd !important;
+      }
+
+      .box h6,
+      .box p {
+        margin: 8px 0;
+      }
+    }
+
+    /* Clean up elements for PDF */
+    #PDF {
+      background: white;
+    }
+
+    #PDF .card {
+      border: none;
+      box-shadow: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="screen-overlay"></div>
+
+  <%- include('../partials/adminAside') %>
+
+  <main class="main-wrap">
+    <%- include('../partials/adminHeader') %>
+
+    <section class="content-main">
+      <div class="content-header" data-html2canvas-ignore="true">
+        <h2 class="content-title">Sales Report</h2>
+      </div>
+
+      <div class="card" id="PDF">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-9">
+              <!-- Search Form - Hidden from PDF -->
+              <header class="border-bottom mb-4 pb-4 no-print" data-html2canvas-ignore="true">
+                <div class="row">
+                  <div class="col-lg-9 col-12 d-flex justify-content-center">
+                    <form class="row g-3 align-items-center" action="/admin/salesreportsearch" method="post" id="dateForm">
+                      <div class="col-auto">
+                        <label for="birthday1" class="col-form-label">Starting:</label>
+                      </div>
+                      <div class="col-auto">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="birthday1"
+                          name="start"
+                          required
+                          value="<%= locals.start || '' %>">
+                      </div>
+                      <div class="col-auto">
+                        <label for="birthday2" class="col-form-label">Ending:</label>
+                      </div>
+                      <div class="col-auto">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="birthday2"
+                          name="end"
+                          required
+                          value="<%= locals.end || '' %>">
+                      </div>
+                      <div class="col-auto">
+                        <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </header>
+
+              <!-- Sales Report Table -->
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Payment</th>
+                      <th scope="col">Coupon Discount</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orders-tbody">
+                    <% if (locals.orderList && locals.orderList.length > 0) { %>
+                      <% locals.orderList.forEach((order) => { %>
+                        <tr>
+                          <td><%= order.orderId %></td>
+                          <td><b><%= order.userId ? order.userId.name : 'N/A' %></b></td>
+                          <td><b><%= order.paymentMethod %></b></td>
+                          <td><b><%= order.couponDiscount || 0 %>%</b></td>
+                          <td>$<b><%= order.totalAmount %></b></td>
+                          <td class="col-date">
+                            <span class="fs-0"><%= order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'N/A' %></span>
+                          </td>
+                        </tr>
+                      <% }) %>
+                    <% } else { %>
+                      <tr>
+                        <td colspan="6" class="text-center">No orders found</td>
+                      </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+
+                <!-- Safe pagination variables -->
+                <% 
+                  const currentPage = locals.currentPage || 1;
+                  const totalPages  = locals.totalPages  || 1;
+                  const limit       = locals.limit       || 10;
+                  const startFilter = locals.start       || '';
+                  const endFilter   = locals.end         || '';
+                %>
+
+                <!-- Pagination - HIDDEN FROM PDF -->
+                <% if (totalPages > 1) { %>
+                  <div class="pagination-container no-print" data-html2canvas-ignore="true">
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination justify-content-center mt-4">
+
+                        <% if (currentPage > 1) { %>
+                          <li class="page-item">
+                            <a class="page-link"
+                               href="/admin/salesreport?page=<%= currentPage - 1 %>&limit=<%= limit %><% if (startFilter && endFilter) { %>&start=<%= startFilter %>&end=<%= endFilter %><% } %>">
+                              Prev
+                            </a>
+                          </li>
+                        <% } else { %>
+                          <li class="page-item disabled">
+                            <span class="page-link">Prev</span>
+                          </li>
+                        <% } %>
+
+                        <% 
+                          const startPage = Math.max(1, currentPage - 2);
+                          const endPage = Math.min(totalPages, currentPage + 2);
+                        %>
+
+                        <% for (let p = startPage; p <= endPage; p++) { %>
+                          <li class="page-item <%= p === currentPage ? 'active' : '' %>">
+                            <a class="page-link"
+                               href="/admin/salesreport?page=<%= p %>&limit=<%= limit %><% if (startFilter && endFilter) { %>&start=<%= startFilter %>&end=<%= endFilter %><% } %>">
+                              <%= p %>
+                            </a>
+                          </li>
+                        <% } %>
+
+                        <% if (currentPage < totalPages) { %>
+                          <li class="page-item">
+                            <a class="page-link"
+                               href="/admin/salesreport?page=<%= currentPage + 1 %>&limit=<%= limit %><% if (startFilter && endFilter) { %>&start=<%= startFilter %>&end=<%= endFilter %><% } %>">
+                              Next
+                            </a>
+                          </li>
+                        <% } else { %>
+                          <li class="page-item disabled">
+                            <span class="page-link">Next</span>
+                          </li>
+                        <% } %>
+
+                      </ul>
+                    </nav>
+                  </div>
+                <% } %>
+
+              </div> <!-- table-responsive // -->
+            </div> <!-- col-lg-9 // -->
+
+            <!-- Transaction Details Aside -->
+            <!-- Transaction Details Aside -->
+<aside class="col-lg-3">
+  <% if (locals.orderList && locals.orderList.length > 0) { %>
+    <div class="box bg-light" style="border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+      <h6 style="margin-top: 15px; margin-bottom: 10px; font-weight: 600;">Transaction Details</h6>
+      <hr style="margin: 10px 0;">
+
+      <% if (locals.start) { %>
+        <h6 style="margin: 0 0 5px 0; font-size: 14px;">From Date: <strong><%= locals.start %></strong></h6>
+        <p style="margin: 0 0 10px 0;"></p>
+        <h6 style="margin: 0 0 5px 0; font-size: 14px;">To Date: <strong><%= locals.end %></strong></h6>
+        <p style="margin: 0 0 10px 0;"></p>
+      <% } %>
+
+      <h6 style="margin: 10px 0 5px 0; font-size: 14px;">
+        Total Amount: <strong>$ <%= Number(locals.grandTotal || 0).toLocaleString() %></strong>
+      </h6>
+      <p style="margin: 0 0 10px 0;"></p>
+      <h6 style="margin: 10px 0 5px 0; font-size: 14px;">
+        Total Orders: <strong><%= locals.totalOrders %></strong>
+      </h6>
+      <p style="margin: 0 0 10px 0;"></p>
+
+      <hr style="margin: 10px 0;">
+      <p style="margin: 10px 0 5px 0; font-size: 14px;">Total Payment:</p>
+      <p style="margin: 0; font-size: 18px; font-weight: 600;">$<%= Number(locals.grandTotal || 0).toLocaleString() %></p>
+      <hr style="margin: 10px 0;">
+
+      <!-- Download Button - Hidden from PDF -->
+      <button class="btn btn-light no-print" id="print" data-html2canvas-ignore="true" style="width: 100%;">Download Report</button>
+    </div>
+  <% } else { %>
+    <div class="box bg-light text-center" style="border: 1px solid #ddd; padding: 20px; border-radius: 5px; min-height: 200px;">
+      <h6>No orders to display</h6>
+      <p>Select a date range to view sales report</p>
+    </div>
+  <% } %>
+</aside>
+ <!-- col-lg-3 // -->
+          </div> <!-- row // -->
+        </div> <!-- card-body // -->
+      </div> <!-- card // -->
+    </section>
+  </main>
+
+  <!-- html2pdf (includes html2canvas + jsPDF) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    // Date validation - enable submit only when both dates are selected
+    document.addEventListener('DOMContentLoaded', function() {
+      const startDateInput = document.getElementById('birthday1');
+      const endDateInput = document.getElementById('birthday2');
+      const submitBtn = document.getElementById('submitBtn');
+
+      function validateDates() {
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+        
+        if (startDate && endDate && new Date(startDate) <= new Date(endDate)) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('btn-secondary');
+          submitBtn.classList.add('btn-primary');
+        } else {
+          submitBtn.disabled = true;
+          submitBtn.classList.remove('btn-primary');
+          submitBtn.classList.add('btn-secondary');
+        }
+      }
+
+      startDateInput.addEventListener('change', validateDates);
+      endDateInput.addEventListener('change', validateDates);
+      validateDates();
+    });
+
+    // PDF Download functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const printBtn = document.getElementById('print');
+      if (printBtn) {
+        printBtn.addEventListener('click', function () {
+          const element = document.getElementById('PDF');
+          const opt = {
+            margin: [10, 10, 10, 10],
+            filename: 'sales-report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+              scale: 2, 
+              useCORS: true, 
+              allowTaint: true,
+              backgroundColor: '#ffffff',
+              ignoreElements: function(el) {
+                return el.hasAttribute('data-html2canvas-ignore');
+              }
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+
+          this.disabled = true;
+          this.textContent = 'Preparing...';
+
+          html2pdf().set(opt).from(element).save().then(() => {
+            this.disabled = false;
+            this.textContent = 'Download Report';
+          }).catch((err) => {
+            console.error(err);
+            alert('PDF generation failed');
+            this.disabled = false;
+            this.textContent = 'Download Report';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Vendor scripts -->
+  <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+  <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+  <script src="/admin-assets/js/vendors/select2.min.js"></script>
+  <script src="/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+  <script src="/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+  <script src="/admin-assets/js/main.js" type="text/javascript"></script>
+</body>
+</html>
