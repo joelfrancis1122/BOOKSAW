@@ -1047,10 +1047,11 @@ function decrease(productId) {
     const couponName = data.couponName;
     const discountAmount = data.discountAmount; // This is percentage, e.g., "20"
     const originalTotal = parseFloat(document.getElementById('GrandTotal').innerText.replace('$', ''));
-    const discountPercent = parseFloat(discountAmount) / 100;
-    const actualDiscount = originalTotal * discountPercent; // Actual $ savings
-    const discountedTotal = originalTotal * (1 - discountPercent);
+  
     
+    const actualDiscount = parseFloat(discountAmount);
+const discountedTotal = originalTotal - actualDiscount;
+
     // Update the grand total display (for order calc)
     document.getElementById('GrandTotal').innerText = '$' + discountedTotal.toFixed(2);
     couponCodeInput.readOnly = true;
