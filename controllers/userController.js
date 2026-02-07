@@ -392,7 +392,7 @@ const verifyOtp = async (req, res) => {
         res.redirect("/home");
       }
     } else {
-      res.render("registeration", { errmessage: "." });
+      res.render("otp", { errmessage: "Invalid Otp" });
     }
   } catch (error) {
     console.error(error);
@@ -523,90 +523,87 @@ const loadShop = async (req, res) => {
   try {
     const categories = await Category.find({ is_Active: true });
     const userId = req.session.user;
-    let { query: search, category, filter } = req.query;
-    const userData = await User.findOne({ _id: userId });
-    const cartData = await Cart.findOne({ userId: userId });
-    const wishlistData = await Wishlist.findOne({ userId: userId }).populate(
-      "product.productId"
-    );
+
+    const { query: search, category, filter } = req.query;
+
+    const userData = await User.findById(userId);
+    const cartData = await Cart.findOne({ userId });
+    const wishlistData = await Wishlist.findOne({ userId });
+
     const cartLength = cartData ? cartData.product.length : 0;
     const wishlistLength = wishlistData ? wishlistData.product.length : 0;
-    let products;
-    const query = { is_Active: true };
-    if (search) query.Bookname = { $regex: new RegExp(search, "i") };
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = 12;
+    const skip = (page - 1) * limit;
+
+    // 🔹 BASE MATCH
+    const match = { is_Active: true };
+
+    if (search) {
+      match.Bookname = { $regex: search, $options: "i" };
+    }
+
     if (category) {
       const categoryObj = await Category.findOne({
         categoryName: category,
         is_Active: true,
       });
-      if (!categoryObj) {
-        console.warn(`Category not found for: ${category}`);
-      } else {
-        query.Categories = categoryObj._id;
+
+      if (categoryObj) {
+        match.Categories = categoryObj._id;
       }
     }
 
-    if (filter) {
-      switch (filter) {
-        case "low-high":
-          if (products) {
-            products = products.sort({ saleprice: 1 });
-          } else {
-            products = await Product.find(query).sort({ saleprice: 1 });
-          }
-          break;
-        case "high-low":
-          if (products) {
-            products = products.sort({ saleprice: -1 });
-          } else {
-            products = await Product.find(query).sort({ saleprice: -1 });
-          }
-          break;
-        default:
-          console.warn(`Unknown filter type: ${filter}`);
-          break;
-      }
-    } else {
-      if (!products) {
-        products = await Product.aggregate([
-          { $match: query },
-          {
-            $lookup: {
-              from: "categories",
-              localField: "Categories",
-              foreignField: "_id",
-              as: "Categories",
-            },
-          },
-          { $unwind: "$Categories" },
-          { $match: { "Categories.is_Active": true } },
-        ]);
-      }
+    // 🔹 SORT LOGIC
+    let sortStage = {};
+    if (filter === "low-high") sortStage.saleprice = 1;
+    if (filter === "high-low") sortStage.saleprice = -1;
+
+    // 🔹 AGGREGATION (single source of truth)
+    const pipeline = [
+      { $match: match },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "Categories",
+          foreignField: "_id",
+          as: "Categories",
+        },
+      },
+      { $unwind: "$Categories" },
+      { $match: { "Categories.is_Active": true } },
+    ];
+
+    if (Object.keys(sortStage).length) {
+      pipeline.push({ $sort: sortStage });
     }
 
-    const page = parseInt(req.query.page) || 1;
-    const limit = 12;
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-    const totalProducts = products.length;
+    const allProducts = await Product.aggregate(pipeline);
+
+    const totalProducts = allProducts.length;
     const totalPages = Math.ceil(totalProducts / limit);
-    const paginatedProducts = products.slice(startIndex, endIndex);
+
+    const paginatedProducts = allProducts.slice(skip, skip + limit);
+
     res.render("shop", {
       product: paginatedProducts,
       categories,
       name: userData?.name ?? null,
       search,
       category,
+      filter,
       cartLength,
       wishlistLength,
       currentPage: page,
-      totalPages: totalPages,
+      totalPages,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.status(500).send("Internal Server Error");
   }
 };
+
 
 const profileEdit = async (req, res) => {
   try {

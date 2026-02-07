@@ -398,18 +398,19 @@
                     <div class="col-lg-3 primary-sidebar sticky-sidebar">
                         <div class="widget-category mb-30">
                             <h5 class="section-title style-1 mb-30 wow fadeIn animated">Categories</h5>
-                            <ul class="category-list">
-                              <% for(let i = 0; i < categories.length; i++) { %>
-                              <li class="category-item">
-                                <a href="#" class="category-link <%= categories[i].isActive ? 'active' : '' %>" id="category<%= i %>" onclick="changeColor(this)">
-                                  <span class="category-icon">
-                                    <i class="fas fa-tags"></i>
-                                  </span>
-                                  <span class="category-name"><%= categories[i].categoryName %></span>
-                                </a>
-                              </li>
-                              <% } %>
-                            </ul>
+                        <ul class="category-list">
+  <% categories.forEach(cat => { %>
+    <li class="category-item">
+      <a
+        href="/loadShop?category=<%= encodeURIComponent(cat.categoryName) %><%= search ? '&query=' + encodeURIComponent(search) : '' %><%= filter ? '&filter=' + filter : '' %>"
+        class="category-link <%= category === cat.categoryName ? 'active' : '' %>"
+      >
+        <span class="category-name"><%= cat.categoryName %></span>
+      </a>
+    </li>
+  <% }) %>
+</ul>
+
                           </div>
                  
                         <!-- Search Form -->
