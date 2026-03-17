@@ -839,8 +839,11 @@
                                                             <% for (let i = wallet.history.length - 1; i >= 0; i--) { %>
                                                                 <tr>
                                                                     <td>#<%= Math.random().toString(36).substr(2, 8).toUpperCase() %></td>
-                                                                    <td><%= wallet.history[i].createdAt.toLocaleString() %></td>
-                                                                    <td style="color: <%= wallet.history[i].type === 'credit' ? '#28a745' : '#dc3545' %>"><%= wallet.history[i].type === 'credit' ? '+ $' : '- $' %><%= wallet.history[i].amount %></td>
+<td>
+  <%= new Date(wallet.history[i].createdAt).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata"
+  }) %>
+</td>                                                                    <td style="color: <%= wallet.history[i].type === 'credit' ? '#28a745' : '#dc3545' %>"><%= wallet.history[i].type === 'credit' ? '+ $' : '- $' %><%= wallet.history[i].amount %></td>
                                                                      <td style="color: <%= wallet.history[i].type === 'credit' ? '#28a745' : '#dc3545' %>"><%= wallet.history[i].type %></td>
                                                                     
                                                                 </tr>
