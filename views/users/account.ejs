@@ -612,45 +612,59 @@
                                             aria-labelledby="address-tab">
                                             <div class="row">
 
+<div class="col-lg-6">
+    <div class="card mb-4 mb-lg-0">
+        <div class="card-header">
+            <h5 class="mb-0">My Address</h5>
+        </div>
+        <div class="card-body">
 
-                                                <div class="col-lg-6">
-                                                    <div class="card mb-4 mb-lg-0">
-                                                        <div class="card-header">
-                                                            <h5 class="mb-0">My Address</h5>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <% if (addresses && addresses.length> 0) { %>
-                                                                <% addresses.forEach((address, index)=> { %>
-                                                                    <div id="address_<%= address._id %>">
-                                                                        <address>
-                                                                            Name: <%= address.name %> <br>
-                                                                                Housename: <%= address.houseName %><br>
-                                                                                    City: <%= address.city %>,<br>
-                                                                                        State: <%= address.state %>.
-                                                                                            <br>
-                                                                                            Pincode: <%= address.pinCode
-                                                                                                %>
-                                                                        </address>
-                                                                        <a
-                                                                            onclick="removeAddress('<%= address._id %>')">
-                                                                            <i class="fa-solid fa-trash fa-xl"></i></a>
-                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                        <a href="/loadEditAddress1?id=<%= address._id %>"
-                                                                            class="edit-address"
-                                                                            style="color: green;">Edit</a> </a>
-                                                                        <hr>
-                                                                    </div>
-                                                                    <% }); %>
-                                                                        <% } else { %>
-                                                                            <p>No address found.</p>
-                                                                            <% } %>
-                                                                                <a href="#"
-                                                                                    class="btn btn-primary btn-lg"
-                                                                                    id="toggleAddressForm">Add
-                                                                                    Address</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+            <% if (addresses && addresses.length > 0) { %>
+                <% addresses.forEach((address, index) => { %>
+                    <div id="address_<%= address._id %>">
+                        <address>
+                            Name: <%= address.name %> <br>
+                            Housename: <%= address.houseName %><br>
+                            City: <%= address.city %>,<br>
+                            State: <%= address.state %>.<br>
+                            Pincode: <%= address.pinCode %>
+                        </address>
+
+                        <a onclick="removeAddress('<%= address._id %>')">
+                            <i class="fa-solid fa-trash fa-xl"></i>
+                        </a>
+
+                        <a href="/loadEditAddress1?id=<%= address._id %>"
+                           class="edit-address"
+                           style="color: green; margin-left: 20px;">
+                           Edit
+                        </a>
+
+                        <hr>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No address found.</p>
+            <% } %>
+
+            <% if (addresses && addresses.length >= 2) { %>
+                <button class="btn btn-primary btn-lg" disabled>
+                    Add Address
+                </button>
+                <p style="color:red; margin-top:8px;">
+                    Maximum 2 addresses allowed
+                </p>
+            <% } else { %>
+                <a href="#"
+                   class="btn btn-primary btn-lg"
+                   id="toggleAddressForm">
+                   Add Address
+                </a>
+            <% } %>
+
+        </div>
+    </div>
+</div>
 
 
                                                 <div class="col-lg-6" id="addressFormContainer" style="display: none;">

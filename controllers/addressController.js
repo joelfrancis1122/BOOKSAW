@@ -12,6 +12,14 @@ const addAddress = async (req, res) => {
   try {
     const userId = req.session.user;
     const { name, mobile, houseName, city, state, pinCode } = req.body;
+console.log("Ss")
+    // check existing address count
+    const addressCount = await Address.countDocuments({ userId: userId });
+
+    if (addressCount >= 2) {
+      return res.status(400).send("Maximum 2 addresses allowed");
+    }
+
     const address = new Address({
       userId: userId,
       name: name,
@@ -21,8 +29,11 @@ const addAddress = async (req, res) => {
       state: state,
       pinCode: pinCode,
     });
-    const savedAddress = await address.save();
+
+    await address.save();
+
     res.redirect("/loadProfile");
+
   } catch (error) {
     console.error(error);
   }
@@ -62,6 +73,8 @@ const loadEditAddress1 = async (req, res) => {
   try {
     const userId = req.session.user;
     const addressData = await Address.findById(req.query.id);
+
+
     res.render("editAddressProfile", { addresses: addressData });
   } catch (error) {
     console.error(error);
