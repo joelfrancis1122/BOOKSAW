@@ -508,8 +508,9 @@
                                                                                 
                                                                                 
                                                                             <td style="padding: 10px;">
-                                                                                <%= order.orderDate.toLocaleString() %>
-                                                                            </td>
+<%= new Date(order.orderDate).toLocaleString("en-IN", {
+  timeZone: "Asia/Kolkata"
+}) %>                                                                            </td>
                                                                             <td style="padding: 10px;">
                                                                                 $<%= order.totalAmount %>
                                                                             </td>
