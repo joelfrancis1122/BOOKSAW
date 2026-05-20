@@ -14,7 +14,8 @@ import session from "express-session";
 import path from 'path';
 import { fileURLToPath } from 'url'; 
 import { log } from "console";
-
+import dns from "node:dns";
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 const app = express();
 const PORT = process.env.PORT || 5001;
 app.use("/public", express.static(path.join(process.cwd(), "public")));
