@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 
 
@@ -1032,18 +1032,20 @@
                 localStorage.removeItem("isAddressFormShown");
 
                 // Toggle the address form visibility when clicking the "Add Address" button
-                toggleAddressForm.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    if (addressFormContainer.style.display === "none") {
-                        addressFormContainer.style.display = "block";
-                        // Store the state in local storage
-                        localStorage.setItem("isAddressFormShown", "true");
-                    } else {
-                        addressFormContainer.style.display = "none";
-                        // Remove the state from local storage
-                        localStorage.removeItem("isAddressFormShown");
-                    }
-                });
+                if (toggleAddressForm) {
+                    toggleAddressForm.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        if (addressFormContainer && addressFormContainer.style.display === "none") {
+                            addressFormContainer.style.display = "block";
+                            // Store the state in local storage
+                            localStorage.setItem("isAddressFormShown", "true");
+                        } else if (addressFormContainer) {
+                            addressFormContainer.style.display = "none";
+                            // Remove the state from local storage
+                            localStorage.removeItem("isAddressFormShown");
+                        }
+                    });
+                }
             });
         </script>
         <script>
@@ -1115,7 +1117,10 @@
                 }
             };
 
-            document.getElementById('profileEditForm').addEventListener('submit', profileEdit);
+            const profileEditForm = document.getElementById('profileEditForm');
+            if (profileEditForm) {
+                profileEditForm.addEventListener('submit', profileEdit);
+            }
         </script>
 
 
@@ -1149,7 +1154,9 @@
 
 
         <script>
-            document.getElementById("addressForm").addEventListener("submit", function (event) {
+            const addressFormElem = document.getElementById("addressForm");
+            if (addressFormElem) {
+                addressFormElem.addEventListener("submit", function (event) {
                 // Prevent form submission
                 event.preventDefault();
 
@@ -1174,7 +1181,8 @@
 
                 // If all validations pass, submit the form
                 this.submit();
-            });
+                });
+            }
         </script>   
  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
