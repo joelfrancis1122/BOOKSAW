@@ -40,7 +40,7 @@
 
 <body>
 
-  <%-include('.. /partials/userHeader')-%>
+  <%-include('../partials/userHeader')-%>
 
     <div class="mobile-header-active mobile-header-wrapper-style">
       <div class="mobile-header-wrapper-inner">
@@ -1010,8 +1010,11 @@
             // Update the cart count in the UI
             const cartCountSpan = document.getElementById('cart-count');
             if (cartCountSpan) {
-              // Use the unary plus operator (+) to ensure textContent is treated as a number
-              cartCountSpan.textContent = parseInt(cartCountSpan.textContent) + 1;
+              cartCountSpan.textContent = parseInt(cartCountSpan.textContent || 0) + 1;
+            }
+            const cartCountMobileSpan = document.getElementById('cart-count-mobile');
+            if (cartCountMobileSpan) {
+              cartCountMobileSpan.textContent = parseInt(cartCountMobileSpan.textContent || 0) + 1;
             }
           } else {
             // Product out of stock or other logic error reported by the server in the payload

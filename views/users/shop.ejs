@@ -654,6 +654,14 @@ function changeColor(link) {
                 if (data.success) {
                     // Product added to cart successfully
                     toastr.success('Product added to cart');
+                    const cartCountSpan = document.getElementById('cart-count');
+                    if (cartCountSpan) {
+                        cartCountSpan.textContent = parseInt(cartCountSpan.textContent || 0) + 1;
+                    }
+                    const cartCountMobileSpan = document.getElementById('cart-count-mobile');
+                    if (cartCountMobileSpan) {
+                        cartCountMobileSpan.textContent = parseInt(cartCountMobileSpan.textContent || 0) + 1;
+                    }
                 } else {
                     toastr.error(data.error);
                 }

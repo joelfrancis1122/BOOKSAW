@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 
 
@@ -405,7 +405,11 @@ function removeFromWishlist(productId) {
                       // Update the cart count in the UI
                       const cartCountSpan = document.getElementById('cart-count');
                       if (cartCountSpan) {
-                          cartCountSpan.textContent = parseInt(cartCountSpan.textContent) + 1;
+                          cartCountSpan.textContent = parseInt(cartCountSpan.textContent || 0) + 1;
+                      }
+                      const cartCountMobileSpan = document.getElementById('cart-count-mobile');
+                      if (cartCountMobileSpan) {
+                          cartCountMobileSpan.textContent = parseInt(cartCountMobileSpan.textContent || 0) + 1;
                       }
                   } else {
                       // Product out of stock or other error
